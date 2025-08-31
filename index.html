@@ -1,0 +1,933 @@
+``html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cargo Connect - Logistics Platform</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --secondary: #3b82f6;
+            --accent: #f59e0b;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --success: #10b981;
+            --danger: #ef4444;
+            --gray: #64748b;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f1f5f9;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background: linear-gradient(120deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1rem 0;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+            font-size: 1.5rem;
+        }
+
+        .logo i {
+            color: var(--accent);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        nav a:hover {
+            color: var(--accent);
+        }
+
+        .hero {
+            padding: 4rem 0;
+            background: linear-gradient(rgba(37, 99, 235, 0.9), rgba(59, 130, 246, 0.9)), url('https://images.unsplash.com/photo-1601577112626-031c51149o14?ixlib=rb-4.0.3') center/cover;
+            color: white;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 1.5rem;
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #e69008;
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid white;
+            margin-left: 1rem;
+        }
+
+        .btn-outline:hover {
+            background: white;
+            color: var(--primary);
+        }
+
+        section {
+            padding: 4rem 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title h2 {
+            font-size: 2.2rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .section-title p {
+            color: var(--gray);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .feature-card {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-card i {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .feature-card h3 {
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+
+        .how-it-works {
+            background-color: var(--light);
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            counter-reset: step-counter;
+        }
+
+        .step {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            position: relative;
+            padding-top: 3.5rem;
+        }
+
+        .step::before {
+            counter-increment: step-counter;
+            content: counter(step-counter);
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 40px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .demo {
+            text-align: center;
+        }
+
+        .tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+
+        .tab-btn {
+            padding: 1rem 2rem;
+            background: white;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            border-bottom: 3px solid transparent;
+        }
+
+        .tab-btn.active {
+            border-bottom: 3px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .tab-content {
+            display: none;
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .shipment-list {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .shipment-item {
+            background: var(--light);
+            padding: 1rem;
+            border-radius: 5px;
+            display: grid;
+            grid-template-columns: 1fr auto;
+            align-items: center;
+        }
+
+        .shipment-details h4 {
+            margin-bottom: 0.5rem;
+        }
+
+        .shipment-meta {
+            display: flex;
+            gap: 1rem;
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        .scalability {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+        }
+
+        .scalability .section-title h2 {
+            color: white;
+        }
+
+        .framework-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .framework-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+        }
+
+        .framework-card h3 {
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 3rem 0 1rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .contact-info {
+            list-style: none;
+        }
+
+        .contact-info li {
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            nav ul {
+                gap: 1rem;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .btn {
+                display: block;
+                margin: 1rem auto;
+                width: 80%;
+            }
+            
+            .tabs {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-truck-loading"></i>
+                    <span>Cargo Connect</span>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#how-it-works">How It Works</a></li>
+                        <li><a href="#demo">Demo</a></li>
+                        <li><a href="#scalability">Scalability</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Revolutionizing African Logistics</h1>
+            <p>Connecting goods owners with transporters across the continent through our innovative digital platform</p>
+            <a href="#demo" class="btn">Explore Demo</a>
+            <a href="#contact" class="btn btn-outline">Contact Us</a>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features">
+        <div class="container">
+            <div class="section-title">
+                <h2>Key Features</h2>
+                <p>Our platform offers comprehensive solutions for both goods owners and transporters</p>
+            </div>
+            <div class="features">
+                <div class="feature-card">
+                    <i class="fas fa-search-location"></i>
+                    <h3>Smart Matching</h3>
+                    <p>AI-powered algorithm matches shipments with the most suitable transporters based on location, capacity, and ratings.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>Secure Escrow Payments</h3>
+                    <p>Integrated payment system holds funds in escrow until delivery is confirmed, protecting both parties.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-map-marked-alt"></i>
+                    <h3>Real-time Tracking</h3>
+                    <p>GPS-enabled tracking allows goods owners to monitor their shipments in real-time throughout the journey.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-file-contract"></i>
+                    <h3>Digital Documentation</h3>
+                    <p>All contracts, waybills, and delivery confirmations are handled digitally for efficiency and record-keeping.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-star"></i>
+                    <h3>Rating System</h3>
+                    <p>Comprehensive rating system builds trust within the community and ensures quality service.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-mobile-alt"></i>
+                    <h3>Mobile First</h3>
+                    <p>Fully responsive design works seamlessly on desktop, tablet, and mobile devices.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="how-it-works">
+        <div class="container">
+            <div class="section-title">
+                <h2>How It Works</h2>
+                <p>Simple and efficient process for both goods owners and transporters</p>
+            </div>
+            <div class="steps">
+                <div class="step">
+                    <h3>Register Your Account</h3>
+                    <p>Sign up as either a goods owner or transporter with basic verification.</p>
+                </div>
+                <div class="step">
+                    <h3>Create or Browse Listings</h3>
+                    <p>Goods owners post shipments, transporters browse available loads.</p>
+                </div>
+                <div class="step">
+                    <h3>Match & Negotiate</h3>
+                    <p>Our algorithm suggests optimal matches, parties negotiate terms.</p>
+                </div>
+                <div class="step">
+                    <h3>Secure Payment & Transport</h3>
+                    <p>Payment is secured in escrow, transport begins with tracking.</p>
+                </div>
+                <div class="step">
+                    <h3>Confirm Delivery & Release Funds</h3>
+                    <p>Goods owner confirms delivery, funds are released to transporter.</p>
+                </div>
+                <div class="step">
+                    <h3>Rate Experience</h3>
+                    <p>Both parties rate each other to build community trust.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Demo Section -->
+    <section id="demo" class="demo">
+        <div class="container">
+            <div class="section-title">
+                <h2>Interactive Demo</h2>
+                <p>Experience our platform's interface and functionality</p>
+            </div>
+            
+            <div class="tabs">
+                <button class="tab-btn active" onclick="openTab('post-tab')">Post a Shipment</button>
+                <button class="tab-btn" onclick="openTab('browse-tab')">Browse Shipments</button>
+                <button class="tab-btn" onclick="openTab('track-tab')">Track Shipment</button>
+            </div>
+            
+            <div id="post-tab" class="tab-content active">
+                <h3>Post a New Shipment</h3>
+                <form id="shipment-form">
+                    <div class="form-group">
+                        <label for="origin">Origin</label>
+                        <input type="text" id="origin" placeholder="City, Country" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="destination">Destination</label>
+                        <input type="text" id="destination" placeholder="City, Country" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="goods-type">Type of Goods</label>
+                        <select id="goods-type" required>
+                            <option value="">Select goods type</option>
+                            <option value="general">General Merchandise</option>
+                            <option value="perishable">Perishable Goods</option>
+                            <option value="fragile">Fragile Items</option>
+                            <option value="hazardous">Hazardous Materials</option>
+                            <option value="oversized">Oversized Load</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="weight">Weight (kg)</label>
+                        <input type="number" id="weight" min="1" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="volume">Volume (m³)</label>
+                        <input type="number" id="volume" min="0.1" step="0.1" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="notes">Additional Notes</label>
+                        <textarea id="notes" rows="3"></textarea>
+                    </div>
+                    <button type="submit" class="btn">Post Shipment</button>
+                </form>
+            </div>
+            
+            <div id="browse-tab" class="tab-content">
+                <h3>Available Shipments</h3>
+                <div class="shipment-list">
+                    <div class="shipment-item">
+                        <div class="shipment-details">
+                            <h4>Lagos to Accra</h4>
+                            <p>General merchandise, 5000kg, 12m³</p>
+                            <div class="shipment-meta">
+                                <span><i class="fas fa-calendar"></i> Posted 2 hours ago</span>
+                                <span><i class="fas fa-money-bill-wave"></i> $1,200 - $1,500</span>
+                            </div>
+                        </div>
+                        <button class="btn">Bid</button>
+                    </div>
+                    <div class="shipment-item">
+                        <div class="shipment-details">
+                            <h4>Nairobi to Kampala</h4>
+                            <p>Perishable goods, 3000kg, 8m³</p>
+                            <div class="shipment-meta">
+                                <span><i class="fas fa-calendar"></i> Posted 5 hours ago</span>
+                                <span><i class="fas fa-money-bill-wave"></i> $900 - $1,200</span>
+                            </div>
+                        </div>
+                        <button class="btn">Bid</button>
+                    </div>
+                    <div class="shipment-item">
+                        <div class="shipment-details">
+                            <h4>Johannesburg to Lusaka</h4>
+                            <p>Construction materials, 10000kg, 20m³</p>
+                            <div class="shipment-meta">
+                                <span><i class="fas fa-calendar"></i> Posted 1 day ago</span>
+                                <span><i class="fas fa-money-bill-wave"></i> $2,000 - $2,500</span>
+                            </div>
+                        </div>
+                        <button class="btn">Bid</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="track-tab" class="tab-content">
+                <h3>Track Your Shipment</h3>
+                <div class="form-group">
+                    <label for="tracking-number">Enter Tracking Number</label>
+                    <input type="text" id="tracking-number" placeholder="e.g. CC-123456">
+                </div>
+                <button class="btn">Track</button>
+                
+                <div style="margin-top: 2rem; padding: 1rem; background: var(--light); border-radius: 5px;">
+                    <h4>Sample Tracking Result</h4>
+                    <p>Tracking Number: <strong>CC-123456</strong></p>
+                    <p>Route: <strong>Lagos, Nigeria → Accra, Ghana</strong></p>
+                    <p>Status: <strong style="color: var(--success);">In Transit</strong></p>
+                    <p>Current Location: <strong>Approaching Lome, Togo</strong></p>
+                    <p>Estimated Delivery: <strong>2 days</strong></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Scalability Section -->
+    <section id="scalability" class="scalability">
+        <div class="container">
+            <div class="section-title">
+                <h2>Scalability & Continental Integration</h2>
+                <p>Prepared for growth and integration with continental trade frameworks</p>
+            </div>
+            
+            <div class="framework-cards">
+                <div class="framework-card">
+                    <h3><i class="fas fa-exchange-alt"></i> PAPSS Integration</h3>
+                    <p>Our platform is designed to integrate with the Pan-African Payment and Settlement System (PAPSS), enabling instant cross-border payments in local currencies across Africa.</p>
+                </div>
+                <div class="framework-card">
+                    <h3><i class="fas fa-globe-africa"></i> AfCFTA Compliance</h3>
+                    <p>We're building in compliance with the African Continental Free Trade Area (AfCFTA) requirements to facilitate seamless cross-border trade and logistics.</p>
+                </div>
+                <div class="framework-card">
+                    <h3><i class="fas fa-expand-arrows-alt"></i> Multi-Market Expansion</h3>
+                    <p>Our architecture supports rapid expansion into new African markets with localized interfaces, payment methods, and regulatory compliance.</p>
+                </div>
+            </div>
+            
+            <div style="margin-top: 3rem; text-align: center;">
+                <h3>Expansion Roadmap</h3>
+                <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 2rem; margin-top: 1.5rem;">
+                    <div style="background: rgba(255,255,255,0.2); padding: 1rem; border-radius: 5px; min-width: 200px;">
+                        <h4>Phase 1</h4>
+                        <p>Nigeria, Ghana, Kenya</p>
+                    </div>
+                    <div style="background: rgba(255,255,255,0.2); padding: 1rem; border-radius: 5px; min-width: 200px;">
+                        <h4>Phase 2</h4>
+                        <p>West & East Africa</p>
+                    </div>
+                    <div style="background: rgba(255,255,255,0.2); padding: 1rem; border-radius: 5px; min-width: 200px;">
+                        <h4>Phase 3</h4>
+                        <p>Pan-African Coverage</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>About Sureway Integrated Technology Solutions</h3>
+                    <p>RC 8481374</p>
+                    <p>We are transforming African logistics through innovative technology solutions that connect businesses and drive economic growth across the continent.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact Information</h3>
+                    <ul class="contact-info">
+                        <li><i class="fas fa-envelope"></i> sureways739@gmail.com</li>
+                        <li><i class="fas fa-phone"></i> +2348152676740</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Lagos, Nigeria</li>
+                    </ul>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul class="contact-info">
+                        <li><a href="#features" style="color: white;">Features</a></li>
+                        <li><a href="#how-it-works" style="color: white;">How It Works</a></li>
+                        <li><a href="#demo" style="color: white;">Demo</a></li>
+                        <li><a href="#scalability" style="color: white;">Scalability</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 Sureway Integrated Technology Solutions Limited. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Tab functionality
+        function openTab(tabId) {
+            // Hide all tab contents
+            const tabContents = document.querySelectorAll('.tab-content');
+            tabContents.forEach(tab => tab.classList.remove('active'));
+            
+            // Remove active class from all buttons
+            const tabButtons = document.querySelectorAll('.tab-btn');
+            tabButtons.forEach(btn => btn.classList.remove('active'));
+            
+            // Show the selected tab and activate the button
+            document.getElementById(tabId).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+        
+        // Form submission
+        document.getElementById('shipment-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Shipment posted successfully! In a full implementation, this would be saved to the database.');
+            this.reset();
+        });
+        
+        // Bid button functionality
+        const bidButtons = document.querySelectorAll('.shipment-item .btn');
+        bidButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const shipment = this.closest('.shipment-item').querySelector('h4').textContent;
+                alert(`Bid placed on shipment: ${shipment}. In a full implementation, this would open a bidding dialog.`);
+            });
+        });
+        
+        // Track button functionality
+        const trackButton = document.querySelector('#track-tab .btn');
+        trackButton.addEventListener('click', function() {
+            const trackingNumber = document.getElementById('tracking-number').value;
+            if(trackingNumber) {
+                alert(`Tracking shipment: ${trackingNumber}. In a full implementation, this would fetch real tracking data.`);
+            } else {
+                alert('Please enter a tracking number');
+            }
+        });
+<!-- Login/Signup Modal -->
+<div id="auth-modal" style="display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5);">
+    <div style="background-color: white; margin: 10% auto; padding: 2rem; border-radius: 10px; width: 90%; max-width: 400px;">
+        <span id="close-auth-modal" style="float: right; font-size: 1.5rem; cursor: pointer;">&times;</span>
+        
+        <h2 id="auth-title">Login to Cargo Connect</h2>
+        
+        <form id="auth-form">
+            <div id="name-field" style="display: none;" class="form-group">
+                <label for="auth-name">Full Name</label>
+                <input type="text" id="auth-name">
+            </div>
+            
+            <div class="form-group">
+                <label for="auth-email">Email</label>
+                <input type="email" id="auth-email" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="auth-password">Password</label>
+                <input type="password" id="auth-password" required>
+            </div>
+            
+            <div id="user-type-field" style="display: none;" class="form-group">
+                <label>I am a:</label>
+                <select id="auth-user-type">
+                    <option value="shipper">Goods Owner</option>
+                    <option value="transporter">Transporter</option>
+                </select>
+            </div>
+            
+            <button type="submit" class="btn" style="width: 100%; margin-top: 1rem;">Login</button>
+        </form>
+        
+        <p id="auth-switch" style="text-align: center; margin-top: 1rem;">
+            Don't have an account? <a href="#" id="auth-switch-link">Sign up</a>
+        </p>
+    </div>
+</div>
+
+<script>
+    // Auth Modal Functionality
+    const authModal = document.getElementById('auth-modal');
+    const authForm = document.getElementById('auth-form');
+    const authTitle = document.getElementById('auth-title');
+    const authSwitchLink = document.getElementById('auth-switch-link');
+    const authSwitchText = document.getElementById('auth-switch');
+    const nameField = document.getElementById('name-field');
+    const userTypeField = document.getElementById('user-type-field');
+    let isLoginMode = true;
+
+    // Open modal when clicking login button in header (you'll need to add this button)
+    function openAuthModal() {
+        authModal.style.display = 'block';
+        setAuthMode(true);
+    }
+
+    // Close modal
+    document.getElementById('close-auth-modal').onclick = function() {
+        authModal.style.display = 'none';
+    }
+
+    // Switch between login/signup
+    authSwitchLink.onclick = function(e) {
+        e.preventDefault();
+        setAuthMode(!isLoginMode);
+    }
+
+    function setAuthMode(isLogin) {
+        isLoginMode = isLogin;
+        if (isLogin) {
+            authTitle.textContent = 'Login to Cargo Connect';
+            document.querySelector('#auth-form button').textContent = 'Login';
+            authSwitchLink.textContent = 'Sign up';
+            authSwitchText.innerHTML = 'Don\'t have an account? <a href="#" id="auth-switch-link">Sign up</a>';
+            nameField.style.display = 'none';
+            userTypeField.style.display = 'none';
+        } else {
+            authTitle.textContent = 'Create an Account';
+            document.querySelector('#auth-form button').textContent = 'Sign Up';
+            authSwitchLink.textContent = 'Login';
+            authSwitchText.innerHTML = 'Already have an account? <a href="#" id="auth-switch-link">Login</a>';
+            nameField.style.display = 'block';
+            userTypeField.style.display = 'block';
+        }
+    }
+
+    // Handle form submission
+    authForm.onsubmit = function(e) {
+        e.preventDefault();
+        const email = document.getElementById('auth-email').value;
+        const password = document.getElementById('auth-password').value;
+        
+        if (isLoginMode) {
+            // Simulate login
+            alert(`Login attempted with: ${email}`);
+            authModal.style.display = 'none';
+            // Update UI to show logged in state
+            document.querySelector('nav ul').innerHTML += '<li><a href="#" onclick="logout()"><i class="fas fa-user"></i> My Account</a></li>';
+        } else {
+            const name = document.getElementById('auth-name').value;
+            const userType = document.getElementById('auth-user-type').value;
+            // Simulate signup
+            alert(`Account created for: ${name} (${email}) as ${userType}`);
+            authModal.style.display = 'none';
+            setAuthMode(true); // Switch back to login mode
+        }
+    }
+
+    function logout() {
+        alert("Logged out successfully");
+        // Reload the page to reset state
+        location.reload();
+    }
+
+    // Close modal if user clicks outside
+    window.onclick = function(event) {
+        if (event.target == authModal) {
+            authModal.style.display = 'none';
+        }
+    }
+</script>
+```
+
+Add a Login button to your header by updating the navigation:
+```html
+<nav>
+    <ul>
+        <li><a href="#features">Features</a></li>
+        <li><a href="#how-it-works">How It Works</a></li>
+        <li><a href="#demo">Demo</a></li>
+        <li><a href="#scalability">Scalability</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a href="#" onclick="openAuthModal(); return false;">Login</a></li>
+    </ul>
+</nav>
+```
+
+#### 1.2 Add Local Storage for Shipments
+Add this script to persist shipment data in the browser:
+
+```html
+<script>
+    // Load saved shipments when the page loads
+    document.addEventListener('DOMContentLoaded', function() {
+        const savedShipments = JSON.parse(localStorage.getItem('cargoShipments')) || [];
+        if (savedShipments.length > 0) {
+            // You could enhance the UI to show these saved shipments
+            console.log('Loaded saved shipments:', savedShipments);
+        }
+    });
+
+    // Enhance the shipment form submission to save data
+    document.getElementById('shipment-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const newShipment = {
+            origin: document.getElementById('origin').value,
+            destination: document.getElementById('destination').value,
+            goodsType: document.getElementById('goods-type').value,
+            weight: document.getElementById('weight').value,
+            volume: document.getElementById('volume').value,
+            notes: document.getElementById('notes').value,
+            date: new Date().toLocaleDateString(),
+            id: Date.now() // Unique ID
+        };
+        
+        // Save to local storage
+        const savedShipments = JSON.parse(localStorage.getItem('cargoShipments')) || [];
+        savedShipments.push(newShipment);
+        localStorage.setItem('cargoShipments', JSON.stringify(savedShipments));
+        
+        alert(`Shipment from ${newShipment.origin} to ${newShipment.destination} posted successfully!`);
+        this.reset();
+        
+        // If on the browse tab, refresh the list
+        if (document.getElementById('browse-tab').classList.contains('active')) {
+            // You could implement a function to refresh the browse list
+        }
+    });
+</script> 
+</body>
+</html>
+```
