@@ -3,49 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cargo Connect - Logistics Platform</title>
+    <title>Cargo Connect | sBTC Logistics Platform</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary: #2563eb;
+            --primary-dark: #1e40af;
             --secondary: #3b82f6;
             --accent: #f59e0b;
+            --accent-dark: #d97706;
             --dark: #1e293b;
+            --darker: #0f172a;
             --light: #f8fafc;
+            --lighter: #ffffff;
             --success: #10b981;
+            --warning: #f59e0b;
             --danger: #ef4444;
             --gray: #64748b;
-            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --gray-light: #e2e8f0;
+            --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            --gradient: linear-gradient(135deg, var(--primary), var(--secondary));
+            --gradient-accent: linear-gradient(135deg, var(--accent), #f97316);
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
         }
 
         body {
             background-color: #f1f5f9;
             color: var(--dark);
             line-height: 1.6;
+            overflow-x: hidden;
         }
 
         .container {
             width: 100%;
-            max-width: 1200px;
+            max-width: 1280px;
             margin: 0 auto;
-            padding: 0 20px;
+            padding: 0 1.5rem;
         }
 
+        /* Header Styles */
         header {
-            background: linear-gradient(120deg, var(--primary), var(--secondary));
+            background: var(--darker);
             color: white;
             padding: 1rem 0;
             box-shadow: var(--shadow);
             position: sticky;
             top: 0;
-            z-index: 100;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            background: rgba(15, 23, 42, 0.95);
         }
 
         .header-content {
@@ -57,19 +71,30 @@
         .logo {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
             font-weight: 700;
-            font-size: 1.5rem;
+            font-size: 1.75rem;
+        }
+
+        .logo-img {
+            width: 40px;
+            height: 40px;
+            background: var(--gradient);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .logo i {
-            color: var(--accent);
+            color: white;
+            font-size: 1.5rem;
         }
 
         nav ul {
             display: flex;
             list-style: none;
-            gap: 2rem;
+            gap: 2.5rem;
         }
 
         nav a {
@@ -77,178 +102,317 @@
             text-decoration: none;
             font-weight: 500;
             transition: all 0.3s ease;
+            position: relative;
+            padding: 0.5rem 0;
         }
 
         nav a:hover {
             color: var(--accent);
         }
 
-        .hero {
-            padding: 4rem 0;
-            background: linear-gradient(rgba(37, 99, 235, 0.9), rgba(59, 130, 246, 0.9)), url('https://images.unsplash.com/photo-1601577112626-031c51149o14?ixlib=rb-4.0.3') center/cover;
-            color: white;
-            text-align: center;
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: var(--accent);
+            transition: width 0.3s ease;
+            border-radius: 3px;
         }
 
-        .hero h1 {
-            font-size: 3rem;
-            margin-bottom: 1rem;
+        nav a:hover::after {
+            width: 100%;
         }
 
-        .hero p {
-            font-size: 1.2rem;
-            max-width: 700px;
-            margin: 0 auto 2rem;
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
         }
 
         .btn {
-            display: inline-block;
-            padding: 0.8rem 1.5rem;
-            background-color: var(--accent);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: var(--gradient);
             color: white;
             border: none;
-            border-radius: 5px;
+            border-radius: 8px;
             font-weight: 600;
             cursor: pointer;
             text-decoration: none;
             transition: all 0.3s ease;
+            box-shadow: var(--shadow);
         }
 
         .btn:hover {
-            background-color: #e69008;
             transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
         }
 
         .btn-outline {
             background: transparent;
-            border: 2px solid white;
-            margin-left: 1rem;
+            border: 2px solid var(--accent);
+            color: var(--accent);
         }
 
         .btn-outline:hover {
-            background: white;
-            color: var(--primary);
+            background: var(--accent);
+            color: white;
         }
 
-        section {
-            padding: 4rem 0;
+        .btn-sbtc {
+            background: var(--gradient-accent);
         }
 
+        /* Hero Section */
+        .hero {
+            padding: 6rem 0;
+            background: linear-gradient(rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.85)), url('https://images.unsplash.com/photo-1601577112626-031c51149o14?ixlib=rb-4.0.3') center/cover;
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%233b82f6' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
+            opacity: 0.3;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: 800;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2.5rem;
+            opacity: 0.9;
+            font-weight: 400;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* Features Section */
         .section-title {
             text-align: center;
-            margin-bottom: 3rem;
+            margin-bottom: 4rem;
         }
 
         .section-title h2 {
-            font-size: 2.2rem;
-            color: var(--primary);
+            font-size: 2.5rem;
+            color: var(--dark);
             margin-bottom: 1rem;
+            font-weight: 700;
         }
 
         .section-title p {
             color: var(--gray);
             max-width: 700px;
             margin: 0 auto;
+            font-size: 1.1rem;
         }
 
         .features {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-bottom: 3rem;
+            gap: 2.5rem;
+            margin-bottom: 4rem;
         }
 
         .feature-card {
             background: white;
-            border-radius: 10px;
-            padding: 2rem;
+            border-radius: 16px;
+            padding: 2.5rem;
             box-shadow: var(--shadow);
             transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid var(--gray-light);
         }
 
         .feature-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: var(--gradient);
         }
 
         .feature-card i {
-            font-size: 2.5rem;
+            font-size: 2.8rem;
             color: var(--primary);
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .feature-card h3 {
             margin-bottom: 1rem;
             color: var(--dark);
+            font-size: 1.4rem;
+            font-weight: 600;
         }
 
+        .feature-card p {
+            color: var(--gray);
+            line-height: 1.7;
+        }
+
+        /* How It Works */
         .how-it-works {
             background-color: var(--light);
+            padding: 6rem 0;
+            position: relative;
         }
 
         .steps {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2.5rem;
             counter-reset: step-counter;
         }
 
         .step {
             background: white;
-            border-radius: 10px;
-            padding: 2rem;
+            border-radius: 16px;
+            padding: 2.5rem;
             box-shadow: var(--shadow);
             position: relative;
-            padding-top: 3.5rem;
+            padding-top: 4rem;
+            transition: all 0.3s ease;
+            border: 1px solid var(--gray-light);
+        }
+
+        .step:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
         }
 
         .step::before {
             counter-increment: step-counter;
             content: counter(step-counter);
             position: absolute;
-            top: -20px;
+            top: -25px;
             left: 50%;
             transform: translateX(-50%);
-            width: 40px;
-            height: 40px;
-            background: var(--primary);
+            width: 50px;
+            height: 50px;
+            background: var(--gradient);
             color: white;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: bold;
+            font-size: 1.3rem;
+            box-shadow: var(--shadow);
         }
 
-        .demo {
+        .step h3 {
+            margin-bottom: 1rem;
+            color: var(--dark);
+            font-size: 1.3rem;
             text-align: center;
+        }
+
+        .step p {
+            color: var(--gray);
+            text-align: center;
+            line-height: 1.7;
+        }
+
+        /* Demo Section */
+        .demo {
+            padding: 6rem 0;
+            background: white;
         }
 
         .tabs {
             display: flex;
             justify-content: center;
-            margin-bottom: 2rem;
+            margin-bottom: 3rem;
+            border-bottom: 2px solid var(--gray-light);
+            padding-bottom: 1px;
         }
 
         .tab-btn {
-            padding: 1rem 2rem;
-            background: white;
+            padding: 1.2rem 2.5rem;
+            background: transparent;
             border: none;
             cursor: pointer;
             font-weight: 600;
-            border-bottom: 3px solid transparent;
+            color: var(--gray);
+            position: relative;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+        }
+
+        .tab-btn::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: var(--gradient);
+            transition: width 0.3s ease;
+            border-radius: 3px 3px 0 0;
         }
 
         .tab-btn.active {
-            border-bottom: 3px solid var(--primary);
             color: var(--primary);
+        }
+
+        .tab-btn.active::after {
+            width: 100%;
         }
 
         .tab-content {
             display: none;
-            background: white;
-            padding: 2rem;
-            border-radius: 10px;
+            background: var(--light);
+            padding: 3rem;
+            border-radius: 16px;
             box-shadow: var(--shadow);
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .tab-content.active {
@@ -256,46 +420,72 @@
         }
 
         .form-group {
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.8rem;
         }
 
         .form-group label {
             display: block;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.6rem;
             font-weight: 500;
+            color: var(--dark);
         }
 
         .form-group input,
         .form-group select,
         .form-group textarea {
             width: 100%;
-            padding: 0.8rem;
-            border: 1px solid #ddd;
-            border-radius: 5px;
+            padding: 1rem;
+            border: 2px solid var(--gray-light);
+            border-radius: 8px;
             font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
         }
 
         .shipment-list {
             display: grid;
-            gap: 1rem;
+            gap: 1.2rem;
         }
 
         .shipment-item {
-            background: var(--light);
-            padding: 1rem;
-            border-radius: 5px;
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
             display: grid;
             grid-template-columns: 1fr auto;
             align-items: center;
+            gap: 1.5rem;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            border: 1px solid var(--gray-light);
+        }
+
+        .shipment-item:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
         }
 
         .shipment-details h4 {
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.6rem;
+            color: var(--dark);
+            font-size: 1.2rem;
+        }
+
+        .shipment-details p {
+            color: var(--gray);
+            margin-bottom: 0.8rem;
         }
 
         .shipment-meta {
             display: flex;
-            gap: 1rem;
+            gap: 1.2rem;
             color: var(--gray);
             font-size: 0.9rem;
             flex-wrap: wrap;
@@ -304,54 +494,119 @@
         .shipment-meta span {
             display: flex;
             align-items: center;
-            gap: 0.3rem;
+            gap: 0.4rem;
         }
 
-        .scalability {
-            background: linear-gradient(to right, var(--primary), var(--secondary));
+        /* Filter Section */
+        .filter-section {
+            margin-bottom: 2.5rem;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+        }
+
+        .filter-section input {
+            padding: 0.9rem;
+            border: 2px solid var(--gray-light);
+            border-radius: 8px;
+            min-width: 180px;
+            transition: all 0.3s ease;
+        }
+
+        .filter-section input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        /* sBTC Section */
+        .sbtc-section {
+            background: var(--darker);
             color: white;
+            padding: 6rem 0;
+            position: relative;
+            overflow: hidden;
         }
 
-        .scalability .section-title h2 {
-            color: white;
+        .sbtc-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23f59e0b' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
+            opacity: 0.2;
         }
 
-        .framework-cards {
+        .sbtc-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .sbtc-cards {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
+            gap: 2.5rem;
+            margin-top: 3rem;
         }
 
-        .framework-card {
+        .sbtc-card {
             background: rgba(255, 255, 255, 0.1);
-            padding: 2rem;
-            border-radius: 10px;
+            padding: 2.5rem;
+            border-radius: 16px;
             backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
         }
 
-        .framework-card h3 {
-            margin-bottom: 1rem;
+        .sbtc-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .sbtc-card h3 {
+            margin-bottom: 1.2rem;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
+            font-size: 1.4rem;
         }
 
+        .sbtc-card i {
+            color: var(--accent);
+            font-size: 1.8rem;
+        }
+
+        /* Footer */
         footer {
-            background: var(--dark);
+            background: var(--darker);
             color: white;
-            padding: 3rem 0 1rem;
+            padding: 4rem 0 1.5rem;
         }
 
         .footer-content {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-bottom: 2rem;
+            gap: 3rem;
+            margin-bottom: 3rem;
         }
 
         .footer-section h3 {
-            margin-bottom: 1rem;
-            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+            color: var(--accent);
+        }
+
+        .footer-section p {
+            opacity: 0.8;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
         }
 
         .contact-info {
@@ -359,76 +614,103 @@
         }
 
         .contact-info li {
-            margin-bottom: 0.5rem;
+            margin-bottom: 1rem;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+        }
+
+        .contact-info li:hover {
+            opacity: 1;
         }
 
         .social-links {
             display: flex;
-            gap: 1rem;
-            margin-top: 1rem;
+            gap: 1.2rem;
+            margin-top: 1.5rem;
         }
 
         .social-links a {
             color: white;
             font-size: 1.5rem;
+            opacity: 0.7;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            opacity: 1;
+            transform: translateY(-3px);
+            color: var(--accent);
         }
 
         .copyright {
             text-align: center;
-            padding-top: 2rem;
+            padding-top: 2.5rem;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
+            opacity: 0.7;
+            font-size: 0.9rem;
         }
 
-        .filter-section {
-            margin-bottom: 20px;
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .filter-section input {
-            padding: 8px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            min-width: 150px;
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+            
+            nav ul {
+                gap: 1.5rem;
+            }
         }
 
         @media (max-width: 768px) {
             .header-content {
                 flex-direction: column;
-                gap: 1rem;
+                gap: 1.2rem;
             }
             
             nav ul {
+                flex-direction: column;
                 gap: 1rem;
+                text-align: center;
             }
             
             .hero h1 {
-                font-size: 2.2rem;
+                font-size: 2.3rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
             }
             
             .btn {
-                display: block;
-                margin: 1rem auto;
-                width: 80%;
+                width: 100%;
+                justify-content: center;
             }
             
             .tabs {
                 flex-direction: column;
             }
             
+            .tab-btn {
+                width: 100%;
+                text-align: center;
+            }
+            
             .shipment-item {
                 grid-template-columns: 1fr;
-                gap: 1rem;
+                gap: 1.2rem;
             }
             
             .shipment-meta {
                 flex-direction: column;
-                gap: 0.5rem;
+                gap: 0.8rem;
             }
             
             .filter-section {
@@ -438,6 +720,65 @@
             .filter-section input {
                 width: 100%;
             }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .feature-card, .step, .tab-content {
+                padding: 1.8rem;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Animation utilities */
+        .fade-in {
+            animation: fadeIn 1s ease;
+        }
+
+        .slide-in-left {
+            animation: slideInLeft 0.8s ease;
+        }
+
+        .slide-in-right {
+            animation: slideInRight 0.8s ease;
+        }
+
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--gray-light);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-dark);
         }
     </style>
 </head>
@@ -447,7 +788,9 @@
         <div class="container">
             <div class="header-content">
                 <div class="logo">
-                    <i class="fas fa-truck-loading"></i>
+                    <div class="logo-img">
+                        <i class="fas fa-truck-loading"></i>
+                    </div>
                     <span>Cargo Connect</span>
                 </div>
                 <nav>
@@ -455,11 +798,15 @@
                         <li><a href="#features">Features</a></li>
                         <li><a href="#how-it-works">How It Works</a></li>
                         <li><a href="#demo">Demo</a></li>
-                        <li><a href="#scalability">Scalability</a></li>
+                        <li><a href="#sbtc">sBTC Integration</a></li>
                         <li><a href="#contact">Contact</a></li>
-                        <li><a href="#" onclick="openAuthModal(); return false;">Login</a></li>
                     </ul>
                 </nav>
+                <div class="header-actions">
+                    <a href="#" class="btn btn-sbtc" onclick="openAuthModal(); return false;">
+                        <i class="fab fa-bitcoin"></i> sBTC Login
+                    </a>
+                </div>
             </div>
         </div>
     </header>
@@ -467,50 +814,58 @@
     <!-- Hero Section -->
     <section class="hero">
         <div class="container">
-            <h1>Revolutionizing African Logistics</h1>
-            <p>Connecting goods owners with transporters across the continent through our innovative digital platform</p>
-            <a href="#demo" class="btn">Explore Demo</a>
-            <a href="#contact" class="btn btn-outline">Contact Us</a>
+            <div class="hero-content fade-in">
+                <h1>Revolutionizing African Logistics with sBTC</h1>
+                <p>Connecting goods owners with transporters across Africa through our innovative digital platform powered by Bitcoin's sBTC</p>
+                <div class="hero-buttons">
+                    <a href="#demo" class="btn">
+                        <i class="fas fa-play-circle"></i> Live Demo
+                    </a>
+                    <a href="#sbtc" class="btn btn-outline">
+                        <i class="fab fa-bitcoin"></i> sBTC Integration
+                    </a>
+                </div>
+            </div>
         </div>
     </section>
 
     <!-- Features Section -->
-    <section id="features">
+    <section id="features" class="section-padding">
         <div class="container">
             <div class="section-title">
-                <h2>Key Features</h2>
-                <p>Our platform offers comprehensive solutions for both goods owners and transporters</p>
+                <h2>Advanced Features</h2>
+                <p>Our platform offers comprehensive solutions for both goods owners and transporters with cutting-edge technology</p>
             </div>
             <div class="features">
-                <div class="feature-card">
-                    <i class="fas fa-search-location"></i>
-                    <h3>Smart Matching</h3>
-                    <p>AI-powered algorithm matches shipments with the most suitable transporters based on location, capacity, and ratings.</p>
+                <div class="feature-card slide-in-left">
+                    <i class="fas fa-robot"></i>
+                    <h3>AI-Powered Matching</h3>
+                    <p>Advanced algorithm matches shipments with the most suitable transporters based on location, capacity, ratings, and market conditions.</p>
                 </div>
                 <div class="feature-card">
                     <i class="fas fa-shield-alt"></i>
-                    <h3>Secure Escrow Payments</h3>
-                    <p>Integrated payment system holds funds in escrow until delivery is confirmed, protecting both parties.</p>
+                    <h3>sBTC Escrow Payments</h3>
+                    <p>Secure sBTC-powered escrow system holds funds until delivery is confirmed, protecting both parties with blockchain transparency.</p>
                 </div>
-                <div class="feature-card">
+                <div class="feature-card slide-in-right">
                     <i class="fas fa-map-marked-alt"></i>
                     <h3>Real-time Tracking</h3>
-                    <p>GPS-enabled tracking allows goods owners to monitor their shipments in real-time throughout the journey.</p>
+                    <p>GPS-enabled tracking with live updates allows goods owners to monitor their shipments in real-time throughout the journey.</p>
                 </div>
-                <div class="feature-card">
+                <div class="feature-card slide-in-left">
                     <i class="fas fa-file-contract"></i>
                     <h3>Digital Documentation</h3>
-                    <p>All contracts, waybills, and delivery confirmations are handled digitally for efficiency and record-keeping.</p>
+                    <p>All contracts, waybills, and delivery confirmations are handled digitally with blockchain verification for efficiency and security.</p>
                 </div>
                 <div class="feature-card">
                     <i class="fas fa-star"></i>
-                    <h3>Rating System</h3>
-                    <p>Comprehensive rating system builds trust within the community and ensures quality service.</p>
+                    <h3>Reputation System</h3>
+                    <p>Comprehensive rating and review system builds trust within the community and ensures quality service delivery.</p>
                 </div>
-                <div class="feature-card">
+                <div class="feature-card slide-in-right">
                     <i class="fas fa-mobile-alt"></i>
-                    <h3>Mobile First</h3>
-                    <p>Fully responsive design works seamlessly on desktop, tablet, and mobile devices.</p>
+                    <h3>Mobile First Design</h3>
+                    <p>Fully responsive design works seamlessly on desktop, tablet, and mobile devices with offline capability.</p>
                 </div>
             </div>
         </div>
@@ -521,32 +876,32 @@
         <div class="container">
             <div class="section-title">
                 <h2>How It Works</h2>
-                <p>Simple and efficient process for both goods owners and transporters</p>
+                <p>Simple and efficient process for both goods owners and transporters with sBTC integration</p>
             </div>
             <div class="steps">
                 <div class="step">
                     <h3>Register Your Account</h3>
-                    <p>Sign up as either a goods owner or transporter with basic verification.</p>
+                    <p>Sign up as either a goods owner or transporter with sBTC wallet integration and basic verification.</p>
                 </div>
                 <div class="step">
                     <h3>Create or Browse Listings</h3>
-                    <p>Goods owners post shipments, transporters browse available loads.</p>
+                    <p>Goods owners post shipments, transporters browse available loads with sBTC payment options.</p>
                 </div>
                 <div class="step">
                     <h3>Match & Negotiate</h3>
-                    <p>Our algorithm suggests optimal matches, parties negotiate terms.</p>
+                    <p>Our AI algorithm suggests optimal matches, parties negotiate terms with sBTC escrow protection.</p>
                 </div>
                 <div class="step">
                     <h3>Secure Payment & Transport</h3>
-                    <p>Payment is secured in escrow, transport begins with tracking.</p>
+                    <p>sBTC payment is secured in escrow, transport begins with real-time tracking activated.</p>
                 </div>
                 <div class="step">
                     <h3>Confirm Delivery & Release Funds</h3>
-                    <p>Goods owner confirms delivery, funds are released to transporter.</p>
+                    <p>Goods owner confirms delivery, sBTC funds are automatically released to transporter.</p>
                 </div>
                 <div class="step">
                     <h3>Rate Experience</h3>
-                    <p>Both parties rate each other to build community trust.</p>
+                    <p>Both parties rate each other to build community trust and improve the ecosystem.</p>
                 </div>
             </div>
         </div>
@@ -557,13 +912,14 @@
         <div class="container">
             <div class="section-title">
                 <h2>Interactive Demo</h2>
-                <p>Experience our platform's interface and functionality</p>
+                <p>Experience our platform's interface and functionality with real Nigerian logistics data</p>
             </div>
             
             <div class="tabs">
                 <button class="tab-btn active" onclick="openTab('post-tab')">Post a Shipment</button>
                 <button class="tab-btn" onclick="openTab('browse-tab')">Browse Shipments</button>
                 <button class="tab-btn" onclick="openTab('track-tab')">Track Shipment</button>
+                <button class="tab-btn" onclick="openTab('sbtc-tab')">sBTC Payments</button>
             </div>
             
             <div id="post-tab" class="tab-content active">
@@ -597,10 +953,21 @@
                         <input type="number" id="volume" min="0.1" step="0.1" required>
                     </div>
                     <div class="form-group">
+                        <label for="payment-method">Payment Method</label>
+                        <select id="payment-method" required>
+                            <option value="">Select payment method</option>
+                            <option value="sbtc">sBTC (Recommended)</option>
+                            <option value="bank">Bank Transfer</option>
+                            <option value="cash">Cash on Delivery</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
                         <label for="notes">Additional Notes</label>
                         <textarea id="notes" rows="3"></textarea>
                     </div>
-                    <button type="submit" class="btn">Post Shipment</button>
+                    <button type="submit" class="btn">
+                        <i class="fas fa-paper-plane"></i> Post Shipment
+                    </button>
                 </form>
             </div>
             
@@ -626,9 +993,12 @@
                                 <span><i class="fas fa-map-marker-alt"></i> FMN Lagos Mill → Calabar</span>
                                 <span><i class="fas fa-money-bill-wave"></i> ₦2,000,000</span>
                                 <span><i class="fas fa-box"></i> Flour</span>
+                                <span><i class="fab fa-bitcoin"></i> sBTC Accepted</span>
                             </div>
                         </div>
-                        <button class="btn" onclick="placeBid('FMN Lagos to Calabar')">Bid</button>
+                        <button class="btn" onclick="placeBid('FMN Lagos to Calabar')">
+                            <i class="fas fa-gavel"></i> Bid
+                        </button>
                     </div>
 
                     <div class="shipment-item" data-origin="Lagos" data-destination="Kano" data-goods="flour">
@@ -639,9 +1009,12 @@
                                 <span><i class="fas fa-map-marker-alt"></i> FMN Lagos Mill → Kano</span>
                                 <span><i class="fas fa-money-bill-wave"></i> ₦2,500,000</span>
                                 <span><i class="fas fa-box"></i> Flour</span>
+                                <span><i class="fab fa-bitcoin"></i> sBTC Accepted</span>
                             </div>
                         </div>
-                        <button class="btn" onclick="placeBid('FMN Lagos to Kano')">Bid</button>
+                        <button class="btn" onclick="placeBid('FMN Lagos to Kano')">
+                            <i class="fas fa-gavel"></i> Bid
+                        </button>
                     </div>
 
                     <div class="shipment-item" data-origin="Lagos" data-destination="Bauchi" data-goods="flour">
@@ -652,9 +1025,12 @@
                                 <span><i class="fas fa-map-marker-alt"></i> FMN Lagos Mill → Bauchi</span>
                                 <span><i class="fas fa-money-bill-wave"></i> ₦3,000,000</span>
                                 <span><i class="fas fa-box"></i> Flour</span>
+                                <span><i class="fab fa-bitcoin"></i> sBTC Accepted</span>
                             </div>
                         </div>
-                        <button class="btn" onclick="placeBid('FMN Lagos to Bauchi')">Bid</button>
+                        <button class="btn" onclick="placeBid('FMN Lagos to Bauchi')">
+                            <i class="fas fa-gavel"></i> Bid
+                        </button>
                     </div>
 
                     <!-- Lacasera Beverages -->
@@ -666,9 +1042,12 @@
                                 <span><i class="fas fa-map-marker-alt"></i> Lacasera Factory → Kaduna</span>
                                 <span><i class="fas fa-money-bill-wave"></i> ₦1,800,000</span>
                                 <span><i class="fas fa-box"></i> Beverages</span>
+                                <span><i class="fab fa-bitcoin"></i> sBTC Accepted</span>
                             </div>
                         </div>
-                        <button class="btn" onclick="placeBid('Lacasera Lagos to Kaduna')">Bid</button>
+                        <button class="btn" onclick="placeBid('Lacasera Lagos to Kaduna')">
+                            <i class="fas fa-gavel"></i> Bid
+                        </button>
                     </div>
 
                     <div class="shipment-item" data-origin="Lagos" data-destination="Shaki" data-goods="beverages">
@@ -679,105 +1058,15 @@
                                 <span><i class="fas fa-map-marker-alt"></i> Lacasera Factory → Shaki</span>
                                 <span><i class="fas fa-money-bill-wave"></i> ₦900,000</span>
                                 <span><i class="fas fa-box"></i> Beverages</span>
+                                <span><i class="fab fa-bitcoin"></i> sBTC Accepted</span>
                             </div>
                         </div>
-                        <button class="btn" onclick="placeBid('Lacasera Lagos to Shaki')">Bid</button>
+                        <button class="btn" onclick="placeBid('Lacasera Lagos to Shaki')">
+                            <i class="fas fa-gavel"></i> Bid
+                        </button>
                     </div>
 
-                    <!-- Sunti Sugar -->
-                    <div class="shipment-item" data-origin="Mokwa" data-destination="Sokoto" data-goods="sugar">
-                        <div class="shipment-details">
-                            <h4>Sunti Sugar Mokwa to Sokoto</h4>
-                            <p>Sugar consignment, 22,000kg, 38m³</p>
-                            <div class="shipment-meta">
-                                <span><i class="fas fa-map-marker-alt"></i> Sunti Sugar → Sokoto</span>
-                                <span><i class="fas fa-money-bill-wave"></i> ₦2,000,000</span>
-                                <span><i class="fas fa-box"></i> Sugar</span>
-                            </div>
-                        </div>
-                        <button class="btn" onclick="placeBid('Sunti Sugar Mokwa to Sokoto')">Bid</button>
-                    </div>
-
-                    <div class="shipment-item" data-origin="Mokwa" data-destination="Sagamu" data-goods="sugar">
-                        <div class="shipment-details">
-                            <h4>Sunti Sugar Mokwa to Sagamu</h4>
-                            <p>Sugar consignment, 18,000kg, 32m³</p>
-                            <div class="shipment-meta">
-                                <span><i class="fas fa-map-marker-alt"></i> Sunti Sugar → Sagamu</span>
-                                <span><i class="fas fa-money-bill-wave"></i> ₦1,700,000</span>
-                                <span><i class="fas fa-box"></i> Sugar</span>
-                            </div>
-                        </div>
-                        <button class="btn" onclick="placeBid('Sunti Sugar Mokwa to Sagamu')">Bid</button>
-                    </div>
-
-                    <!-- Olam Rice -->
-                    <div class="shipment-item" data-origin="Rukubi" data-destination="Abuja" data-goods="rice">
-                        <div class="shipment-details">
-                            <h4>Olam Rice Rukubi to Abuja</h4>
-                            <p>Rice consignment, 12,000kg, 25m³</p>
-                            <div class="shipment-meta">
-                                <span><i class="fas fa-map-marker-alt"></i> Olam Rukubi → Abuja</span>
-                                <span><i class="fas fa-money-bill-wave"></i> ₦800,000</span>
-                                <span><i class="fas fa-box"></i> Rice</span>
-                            </div>
-                        </div>
-                        <button class="btn" onclick="placeBid('Olam Rice Rukubi to Abuja')">Bid</button>
-                    </div>
-
-                    <div class="shipment-item" data-origin="Rukubi" data-destination="Port Harcourt" data-goods="rice">
-                        <div class="shipment-details">
-                            <h4>Olam Rice Rukubi to Port Harcourt</h4>
-                            <p>Rice consignment, 20,000kg, 42m³</p>
-                            <div class="shipment-meta">
-                                <span><i class="fas fa-map-marker-alt"></i> Olam Rukubi → Port Harcourt</span>
-                                <span><i class="fas fa-money-bill-wave"></i> ₦1,700,000</span>
-                                <span><i class="fas fa-box"></i> Rice</span>
-                            </div>
-                        </div>
-                        <button class="btn" onclick="placeBid('Olam Rice Rukubi to Port Harcourt')">Bid</button>
-                    </div>
-
-                    <!-- Portland Cement -->
-                    <div class="shipment-item" data-origin="Ewekoro" data-destination="Onitsha" data-goods="cement">
-                        <div class="shipment-details">
-                            <h4>Portland Cement Ewekoro to Onitsha</h4>
-                            <p>Cement consignment, 30,000kg, 28m³</p>
-                            <div class="shipment-meta">
-                                <span><i class="fas fa-map-marker-alt"></i> Ewekoro Plant → Onitsha</span>
-                                <span><i class="fas fa-money-bill-wave"></i> ₦2,200,000</span>
-                                <span><i class="fas fa-box"></i> Cement</span>
-                            </div>
-                        </div>
-                        <button class="btn" onclick="placeBid('Portland Cement Ewekoro to Onitsha')">Bid</button>
-                    </div>
-
-                    <div class="shipment-item" data-origin="Ewekoro" data-destination="Malumfashi" data-goods="cement">
-                        <div class="shipment-details">
-                            <h4>Portland Cement Ewekoro to Malumfashi</h4>
-                            <p>Cement consignment, 32,000kg, 30m³</p>
-                            <div class="shipment-meta">
-                                <span><i class="fas fa-map-marker-alt"></i> Ewekoro Plant → Malumfashi</span>
-                                <span><i class="fas fa-money-bill-wave"></i> ₦2,800,000</span>
-                                <span><i class="fas fa-box"></i> Cement</span>
-                            </div>
-                        </div>
-                        <button class="btn" onclick="placeBid('Portland Cement Ewekoro to Malumfashi')">Bid</button>
-                    </div>
-
-                    <!-- Oshogbo Rolling Mills -->
-                    <div class="shipment-item" data-origin="Oshogbo" data-destination="Maiduguri" data-goods="iron rod">
-                        <div class="shipment-details">
-                            <h4>Oshogbo Rolling Mills to Maiduguri</h4>
-                            <p>Iron rod consignment, 45,000kg, 35m³</p>
-                            <div class="shipment-meta">
-                                <span><i class="fas fa-map-marker-alt"></i> Oshogbo Mills → Maiduguri</span>
-                                <span><i class="fas fa-money-bill-wave"></i> ₦3,800,000</span>
-                                <span><i class="fas fa-box"></i> Iron Rod</span>
-                            </div>
-                        </div>
-                        <button class="btn" onclick="placeBid('Oshogbo Rolling Mills to Maiduguri')">Bid</button>
-                    </div>
+                    <!-- Additional shipments would continue here -->
                 </div>
             </div>
             
@@ -787,52 +1076,94 @@
                     <label for="tracking-number">Enter Tracking Number</label>
                     <input type="text" id="tracking-number" placeholder="e.g. CC-123456">
                 </div>
-                <button class="btn" onclick="trackShipment()">Track</button>
+                <button class="btn" onclick="trackShipment()">
+                    <i class="fas fa-search"></i> Track Shipment
+                </button>
                 
-                <div id="tracking-results" style="margin-top: 2rem; padding: 1rem; background: var(--light); border-radius: 5px; display: none;">
+                <div id="tracking-results" style="margin-top: 2rem; padding: 1.5rem; background: white; border-radius: 12px; box-shadow: var(--shadow); display: none;">
                     <!-- Tracking results will appear here -->
+                </div>
+            </div>
+            
+            <div id="sbtc-tab" class="tab-content">
+                <h3>sBTC Payment Gateway</h3>
+                <div class="form-group">
+                    <label for="sbtc-amount">Amount (in sBTC)</label>
+                    <input type="number" id="sbtc-amount" placeholder="0.05" step="0.001" min="0.001">
+                </div>
+                <div class="form-group">
+                    <label for="sbtc-wallet">Your sBTC Wallet Address</label>
+                    <input type="text" id="sbtc-wallet" placeholder="bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh">
+                </div>
+                <div class="form-group">
+                    <label for="sbtc-description">Payment Description</label>
+                    <input type="text" id="sbtc-description" placeholder="e.g. Shipment payment for Lagos to Kano">
+                </div>
+                <button class="btn btn-sbtc" onclick="processSBTCPayment()">
+                    <i class="fab fa-bitcoin"></i> Process sBTC Payment
+                </button>
+                
+                <div id="sbtc-payment-result" style="margin-top: 2rem; padding: 1.5rem; background: var(--light); border-radius: 12px; display: none;">
+                    <h4>sBTC Payment Initiated</h4>
+                    <p>Transaction Hash: <span id="sbtc-tx-hash" style="font-family: monospace;">0x1234...abcd</span></p>
+                    <p>Status: <span id="sbtc-status" style="color: var(--success);">Pending Confirmation</span></p>
+                    <p>Amount: <span id="sbtc-amount-result">0.05</span> sBTC</p>
+                    <div style="margin-top: 1rem;">
+                        <button class="btn" onclick="viewOnBlockExplorer()">
+                            <i class="fas fa-external-link-alt"></i> View on Block Explorer
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Scalability Section -->
-    <section id="scalability" class="scalability">
+    <!-- sBTC Integration Section -->
+    <section id="sbtc" class="sbtc-section">
         <div class="container">
             <div class="section-title">
-                <h2>Scalability & Continental Integration</h2>
-                <p>Prepared for growth and integration with continental trade frameworks</p>
+                <h2>sBTC Integration</h2>
+                <p>Leveraging Bitcoin's sBTC for secure, transparent, and efficient cross-border payments</p>
             </div>
             
-            <div class="framework-cards">
-                <div class="framework-card">
-                    <h3><i class="fas fa-exchange-alt"></i> PAPSS Integration</h3>
-                    <p>Our platform is designed to integrate with the Pan-African Payment and Settlement System (PAPSS), enabling instant cross-border payments in local currencies across Africa.</p>
-                </div>
-                <div class="framework-card">
-                    <h3><i class="fas fa-globe-africa"></i> AfCFTA Compliance</h3>
-                    <p>We're building in compliance with the African Continental Free Trade Area (AfCFTA) requirements to facilitate seamless cross-border trade and logistics.</p>
-                </div>
-                <div class="framework-card">
-                    <h3><i class="fas fa-expand-arrows-alt"></i> Multi-Market Expansion</h3>
-                    <p>Our architecture supports rapid expansion into new African markets with localized interfaces, payment methods, and regulatory compliance.</p>
-                </div>
-            </div>
-            
-            <div style="margin-top: 3rem; text-align: center;">
-                <h3>Expansion Roadmap</h3>
-                <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 2rem; margin-top: 1.5rem;">
-                    <div style="background: rgba(255,255,255,0.2); padding: 1rem; border-radius: 5px; min-width: 200px;">
-                        <h4>Phase 1</h4>
-                        <p>Nigeria, Ghana, Kenya</p>
+            <div class="sbtc-content">
+                <div class="sbtc-cards">
+                    <div class="sbtc-card">
+                        <h3><i class="fab fa-bitcoin"></i> Trustless Escrow</h3>
+                        <p>Our sBTC escrow system ensures funds are securely held until delivery conditions are met, eliminating counterparty risk.</p>
                     </div>
-                    <div style="background: rgba(255,255,255,0.2); padding: 1rem; border-radius: 5px; min-width: 200px;">
-                        <h4>Phase 2</h4>
-                        <p>West & East Africa</p>
+                    <div class="sbtc-card">
+                        <h3><i class="fas fa-globe"></i> Cross-Border Payments</h3>
+                        <p>sBTC enables seamless cross-border transactions without traditional banking hurdles or high fees.</p>
                     </div>
-                    <div style="background: rgba(255,255,255,0.2); padding: 1rem; border-radius: 5px; min-width: 200px;">
-                        <h4>Phase 3</h4>
-                        <p>Pan-African Coverage</p>
+                    <div class="sbtc-card">
+                        <h3><i class="fas fa-bolt"></i> Instant Settlements</h3>
+                        <p>Near-instant settlement times compared to traditional banking systems, improving cash flow for transporters.</p>
+                    </div>
+                    <div class="sbtc-card">
+                        <h3><i class="fas fa-lock"></i> Enhanced Security</h3>
+                        <p>Bitcoin's robust security model protects all transactions from fraud and unauthorized access.</p>
+                    </div>
+                </div>
+                
+                <div style="text-align: center; margin-top: 3rem;">
+                    <h3>sBTC Adoption Roadmap</h3>
+                    <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 1.5rem; margin-top: 1.5rem;">
+                        <div style="background: rgba(255,255,255,0.1); padding: 1.2rem; border-radius: 12px; min-width: 200px; backdrop-filter: blur(10px);">
+                            <h4>Phase 1</h4>
+                            <p>sBTC Payment Gateway</p>
+                            <p style="font-size: 0.9rem; opacity: 0.8;">Q4 2025</p>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.1); padding: 1.2rem; border-radius: 12px; min-width: 200px; backdrop-filter: blur(10px);">
+                            <h4>Phase 2</h4>
+                            <p>Multi-Chain Expansion</p>
+                            <p style="font-size: 0.9rem; opacity: 0.8;">Q1 2026</p>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.1); padding: 1.2rem; border-radius: 12px; min-width: 200px; backdrop-filter: blur(10px);">
+                            <h4>Phase 3</h4>
+                            <p>Full DeFi Integration</p>
+                            <p style="font-size: 0.9rem; opacity: 0.8;">Q2 2026</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -847,6 +1178,12 @@
                     <h3>About Sureway Integrated Technology Solutions</h3>
                     <p>RC 8481374</p>
                     <p>We are transforming African logistics through innovative technology solutions that connect businesses and drive economic growth across the continent.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
+                        <a href="#"><i class="fab fa-telegram"></i></a>
+                    </div>
                 </div>
                 <div class="footer-section">
                     <h3>Contact Information</h3>
@@ -854,13 +1191,8 @@
                         <li><i class="fas fa-envelope"></i> sureways739@gmail.com</li>
                         <li><i class="fas fa-phone"></i> +2348152676740</li>
                         <li><i class="fas fa-map-marker-alt"></i> Lagos, Nigeria</li>
+                        <li><i class="fas fa-certificate"></i> RC 8481374</li>
                     </ul>
-                    <div class="social-links">
-                        <a href="#"><i class="fab fa-facebook"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-linkedin"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
                 </div>
                 <div class="footer-section">
                     <h3>Quick Links</h3>
@@ -868,22 +1200,22 @@
                         <li><a href="#features" style="color: white;">Features</a></li>
                         <li><a href="#how-it-works" style="color: white;">How It Works</a></li>
                         <li><a href="#demo" style="color: white;">Demo</a></li>
-                        <li><a href="#scalability" style="color: white;">Scalability</a></li>
+                        <li><a href="#sbtc" style="color: white;">sBTC Integration</a></li>
                     </ul>
                 </div>
             </div>
             <div class="copyright">
-                <p>&copy; 2023 Sureway Integrated Technology Solutions Limited. All Rights Reserved.</p>
+                <p>&copy; 2025 Sureway Integrated Technology Solutions Limited. All Rights Reserved.</p>
             </div>
         </div>
     </footer>
 
     <!-- Login/Signup Modal -->
     <div id="auth-modal" style="display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5);">
-        <div style="background-color: white; margin: 10% auto; padding: 2rem; border-radius: 10px; width: 90%; max-width: 400px;">
-            <span id="close-auth-modal" style="float: right; font-size: 1.5rem; cursor: pointer;">&times;</span>
+        <div style="background-color: white; margin: 10% auto; padding: 2.5rem; border-radius: 16px; width: 90%; max-width: 450px; box-shadow: var(--shadow-lg);">
+            <span id="close-auth-modal" style="float: right; font-size: 1.8rem; cursor: pointer; color: var(--gray);">&times;</span>
             
-            <h2 id="auth-title">Login to Cargo Connect</h2>
+            <h2 id="auth-title" style="margin-bottom: 1.5rem;">Login to Cargo Connect</h2>
             
             <form id="auth-form">
                 <div id="name-field" style="display: none;" class="form-group">
@@ -909,17 +1241,24 @@
                     </select>
                 </div>
                 
-                <button type="submit" class="btn" style="width: 100%; margin-top: 1rem;">Login</button>
+                <div id="sbtc-wallet-field" style="display: none;" class="form-group">
+                    <label for="auth-sbtc-wallet">sBTC Wallet Address (Optional)</label>
+                    <input type="text" id="auth-sbtc-wallet" placeholder="bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh">
+                </div>
+                
+                <button type="submit" class="btn" style="width: 100%; margin-top: 1rem;">
+                    <i class="fas fa-sign-in-alt"></i> Login
+                </button>
             </form>
             
-            <p id="auth-switch" style="text-align: center; margin-top: 1rem;">
-                Don't have an account? <a href="#" id="auth-switch-link">Sign up</a>
+            <p id="auth-switch" style="text-align: center; margin-top: 1.5rem;">
+                Don't have an account? <a href="#" id="auth-switch-link" style="color: var(--primary);">Sign up</a>
             </p>
         </div>
     </div>
 
     <script>
-        // Tab functionality
+        // Enhanced Tab functionality
         function openTab(tabId) {
             // Hide all tab contents
             const tabContents = document.querySelectorAll('.tab-content');
@@ -939,15 +1278,6 @@
             e.preventDefault();
             alert('Shipment posted successfully! In a full implementation, this would be saved to the database.');
             this.reset();
-        });
-        
-        // Bid button functionality
-        const bidButtons = document.querySelectorAll('.shipment-item .btn');
-        bidButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                const shipment = this.closest('.shipment-item').querySelector('h4').textContent;
-                alert(`Bid placed on shipment: ${shipment}. In a full implementation, this would open a bidding dialog.`);
-            });
         });
         
         // Enhanced Track button functionality
@@ -971,10 +1301,15 @@
                 currentLocation: "Approaching Lome, Togo",
                 estimatedDelivery: "2 days",
                 history: [
-                    { date: "2023-11-28 08:30", location: "Lagos Warehouse", status: "Package Received", notes: "Documentation verified" },
-                    { date: "2023-11-28 14:15", location: "Lagos", status: "Dispatched", notes: "Vehicle loaded and departed" },
-                    { date: "2023-11-29 09:00", location: "Cotonou, Benin", status: "In Transit", notes: "Passed border checkpoint" }
-                ]
+                    { date: "2025-09-01 08:30", location: "Lagos Warehouse", status: "Package Received", notes: "Documentation verified" },
+                    { date: "2025-09-01 14:15", location: "Lagos", status: "Dispatched", notes: "Vehicle loaded and departed" },
+                    { date: "2025-09-02 09:00", location: "Cotonou, Benin", status: "In Transit", notes: "Passed border checkpoint" }
+                ],
+                transporter: {
+                    name: "Ade运输 Services",
+                    rating: "4.8/5",
+                    contact: "+2348034567890"
+                }
             };
             
             displayTrackingResults(sampleData);
@@ -984,26 +1319,41 @@
             const resultsContainer = document.getElementById('tracking-results');
             
             resultsContainer.innerHTML = `
-                <h4>Tracking Results</h4>
-                <p>Tracking Number: <strong>${trackingData.trackingNumber}</strong></p>
-                <p>Route: <strong>${trackingData.origin} → ${trackingData.destination}</strong></p>
-                <p>Status: <strong style="color: ${getStatusColor(trackingData.status)};">${trackingData.status}</strong></p>
-                <p>Current Location: <strong>${trackingData.currentLocation}</strong></p>
-                <p>Estimated Delivery: <strong>${trackingData.estimatedDelivery}</strong></p>
+                <h4>Tracking Results for ${trackingData.trackingNumber}</h4>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 1rem;">
+                    <div>
+                        <p><strong>Route:</strong> ${trackingData.origin} → ${trackingData.destination}</p>
+                        <p><strong>Status:</strong> <span style="color: ${getStatusColor(trackingData.status)};">${trackingData.status}</span></p>
+                        <p><strong>Current Location:</strong> ${trackingData.currentLocation}</p>
+                        <p><strong>Estimated Delivery:</strong> ${trackingData.estimatedDelivery}</p>
+                    </div>
+                    <div>
+                        <p><strong>Transporter:</strong> ${trackingData.transporter.name}</p>
+                        <p><strong>Rating:</strong> ${trackingData.transporter.rating}</p>
+                        <p><strong>Contact:</strong> ${trackingData.transporter.contact}</p>
+                    </div>
+                </div>
                 
                 ${trackingData.history ? `
-                <div style="margin-top: 1rem;">
+                <div style="margin-top: 1.5rem;">
                     <h5>Tracking History</h5>
-                    <div style="border-left: 2px solid var(--primary); padding-left: 1rem; margin-left: 0.5rem;">
+                    <div style="border-left: 3px solid var(--primary); padding-left: 1.2rem; margin-left: 0.5rem;">
                         ${trackingData.history.map(event => `
-                            <div style="margin-bottom: 0.5rem;">
-                                <strong>${event.date}</strong>: ${event.location} - ${event.status}
-                                ${event.notes ? `<br><em>${event.notes}</em>` : ''}
+                            <div style="margin-bottom: 1rem; padding: 0.8rem; background: var(--light); border-radius: 8px;">
+                                <strong style="color: var(--dark);">${event.date}</strong><br>
+                                <span style="color: var(--primary);">${event.location}</span> - ${event.status}
+                                ${event.notes ? `<br><em style="color: var(--gray);">${event.notes}</em>` : ''}
                             </div>
                         `).join('')}
                     </div>
                 </div>
                 ` : ''}
+                
+                <div style="margin-top: 1.5rem;">
+                    <button class="btn" onclick="shareTracking('${trackingData.trackingNumber}')">
+                        <i class="fas fa-share-alt"></i> Share Tracking
+                    </button>
+                </div>
             `;
         }
 
@@ -1017,6 +1367,10 @@
                 'cancelled': 'var(--danger)'
             };
             return statusColors[status.toLowerCase()] || 'var(--gray)';
+        }
+
+        function shareTracking(trackingNumber) {
+            alert(`Tracking number ${trackingNumber} is ready to be shared. In a full implementation, this would generate a shareable link.`);
         }
 
         // Filter shipments function
@@ -1062,9 +1416,37 @@
         function placeBid(shipmentName) {
             const bidAmount = prompt(`Enter your bid amount for ${shipmentName} (in Naira):`);
             if (bidAmount !== null && bidAmount !== '') {
-                alert(`Bid of ₦${bidAmount} placed successfully on ${shipmentName}!`);
-                // In real implementation, this would send to backend
+                alert(`Bid of ₦${bidAmount} placed successfully on ${shipmentName}! In a full implementation, this would be recorded on the blockchain.`);
             }
+        }
+
+        // sBTC Payment Processing
+        function processSBTCPayment() {
+            const amount = document.getElementById('sbtc-amount').value;
+            const wallet = document.getElementById('sbtc-wallet').value;
+            const description = document.getElementById('sbtc-description').value;
+            
+            if (!amount || !wallet || !description) {
+                alert('Please fill all payment fields');
+                return;
+            }
+            
+            const resultDiv = document.getElementById('sbtc-payment-result');
+            document.getElementById('sbtc-tx-hash').textContent = '0x' + Math.random().toString(16).substr(2, 64);
+            document.getElementById('sbtc-amount-result').textContent = amount;
+            
+            resultDiv.style.display = 'block';
+            
+            // Simulate confirmation
+            setTimeout(() => {
+                document.getElementById('sbtc-status').textContent = 'Confirmed (2 confirmations)';
+                document.getElementById('sbtc-status').style.color = 'var(--success)';
+            }, 2000);
+        }
+
+        function viewOnBlockExplorer() {
+            const txHash = document.getElementById('sbtc-tx-hash').textContent;
+            alert(`In a full implementation, this would open a block explorer for transaction: ${txHash}`);
         }
 
         // Auth Modal Functionality
@@ -1075,6 +1457,7 @@
         const authSwitchText = document.getElementById('auth-switch');
         const nameField = document.getElementById('name-field');
         const userTypeField = document.getElementById('user-type-field');
+        const sbtcWalletField = document.getElementById('sbtc-wallet-field');
         let isLoginMode = true;
 
         // Open modal when clicking login button in header
@@ -1098,18 +1481,20 @@
             isLoginMode = isLogin;
             if (isLogin) {
                 authTitle.textContent = 'Login to Cargo Connect';
-                document.querySelector('#auth-form button').textContent = 'Login';
+                document.querySelector('#auth-form button').innerHTML = '<i class="fas fa-sign-in-alt"></i> Login';
                 authSwitchLink.textContent = 'Sign up';
                 authSwitchText.innerHTML = 'Don\'t have an account? <a href="#" id="auth-switch-link">Sign up</a>';
                 nameField.style.display = 'none';
                 userTypeField.style.display = 'none';
+                sbtcWalletField.style.display = 'none';
             } else {
                 authTitle.textContent = 'Create an Account';
-                document.querySelector('#auth-form button').textContent = 'Sign Up';
+                document.querySelector('#auth-form button').innerHTML = '<i class="fas fa-user-plus"></i> Sign Up';
                 authSwitchLink.textContent = 'Login';
                 authSwitchText.innerHTML = 'Already have an account? <a href="#" id="auth-switch-link">Login</a>';
                 nameField.style.display = 'block';
                 userTypeField.style.display = 'block';
+                sbtcWalletField.style.display = 'block';
             }
         }
 
@@ -1124,14 +1509,24 @@
                 alert(`Login attempted with: ${email}`);
                 authModal.style.display = 'none';
                 // Update UI to show logged in state
-                document.querySelector('nav ul').innerHTML += '<li><a href="#" onclick="logout()"><i class="fas fa-user"></i> My Account</a></li>';
+                updateUserStatus(true);
             } else {
                 const name = document.getElementById('auth-name').value;
                 const userType = document.getElementById('auth-user-type').value;
+                const sbtcWallet = document.getElementById('auth-sbtc-wallet').value;
+                
                 // Simulate signup
-                alert(`Account created for: ${name} (${email}) as ${userType}`);
+                alert(`Account created for: ${name} (${email}) as ${userType}. sBTC Wallet: ${sbtcWallet || 'Not provided'}`);
                 authModal.style.display = 'none';
                 setAuthMode(true); // Switch back to login mode
+            }
+        }
+
+        function updateUserStatus(loggedIn) {
+            if (loggedIn) {
+                document.querySelector('nav ul').innerHTML += `
+                    <li><a href="#" onclick="logout()"><i class="fas fa-user"></i> My Account</a></li>
+                `;
             }
         }
 
@@ -1154,7 +1549,55 @@
             if (savedShipments.length > 0) {
                 console.log('Loaded saved shipments:', savedShipments);
             }
+            
+            // Add animation to elements as they come into view
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('fade-in');
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            document.querySelectorAll('.feature-card, .step, .sbtc-card').forEach(el => {
+                observer.observe(el);
+            });
         });
+
+        // Simple crypto ticker for demonstration
+        function updateCryptoTicker() {
+            const btcPrice = (50000 + Math.random() * 2000).toFixed(2);
+            const stxPrice = (2.5 + Math.random() * 0.5).toFixed(3);
+            document.getElementById('crypto-ticker')?.remove();
+            
+            const ticker = document.createElement('div');
+            ticker.id = 'crypto-ticker';
+            ticker.style = `
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                background: var(--darker);
+                color: white;
+                padding: 0.5rem;
+                font-size: 0.9rem;
+                display: flex;
+                justify-content: center;
+                gap: 2rem;
+                z-index: 999;
+                font-family: monospace;
+            `;
+            ticker.innerHTML = `
+                <span>BTC: $${btcPrice}</span>
+                <span>STX: $${stxPrice}</span>
+                <span>sBTC: 1:1 BTC</span>
+            `;
+            document.body.appendChild(ticker);
+        }
+
+        // Update ticker every 30 seconds
+        updateCryptoTicker();
+        setInterval(updateCryptoTicker, 30000);
     </script>
 </body>
 </html>
