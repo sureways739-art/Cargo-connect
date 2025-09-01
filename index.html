@@ -298,6 +298,13 @@
             gap: 1rem;
             color: var(--gray);
             font-size: 0.9rem;
+            flex-wrap: wrap;
+        }
+
+        .shipment-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
         }
 
         .scalability {
@@ -375,6 +382,21 @@
             border-top: 1px solid rgba(255, 255, 255, 0.1);
         }
 
+        .filter-section {
+            margin-bottom: 20px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .filter-section input {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            min-width: 150px;
+        }
+
         @media (max-width: 768px) {
             .header-content {
                 flex-direction: column;
@@ -397,6 +419,24 @@
             
             .tabs {
                 flex-direction: column;
+            }
+            
+            .shipment-item {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .shipment-meta {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            
+            .filter-section {
+                flex-direction: column;
+            }
+            
+            .filter-section input {
+                width: 100%;
             }
         }
     </style>
@@ -566,39 +606,177 @@
             
             <div id="browse-tab" class="tab-content">
                 <h3>Available Shipments</h3>
+                
+                <!-- Filter Section -->
+                <div class="filter-section">
+                    <input type="text" placeholder="Filter by origin..." id="filter-origin">
+                    <input type="text" placeholder="Filter by destination..." id="filter-destination">
+                    <input type="text" placeholder="Filter by goods..." id="filter-goods">
+                    <button onclick="filterShipments()" class="btn">Filter</button>
+                    <button onclick="clearFilters()" class="btn" style="background: var(--gray);">Clear</button>
+                </div>
+                
                 <div class="shipment-list">
-                    <div class="shipment-item">
+                    <!-- FMN Flour Shipments -->
+                    <div class="shipment-item" data-origin="Lagos" data-destination="Calabar" data-goods="flour">
                         <div class="shipment-details">
-                            <h4>Lagos to Accra</h4>
-                            <p>General merchandise, 5000kg, 12m³</p>
+                            <h4>FMN Lagos to Calabar</h4>
+                            <p>Flour consignment, 20,000kg, 40m³</p>
                             <div class="shipment-meta">
-                                <span><i class="fas fa-calendar"></i> Posted 2 hours ago</span>
-                                <span><i class="fas fa-money-bill-wave"></i> $1,200 - $1,500</span>
+                                <span><i class="fas fa-map-marker-alt"></i> FMN Lagos Mill → Calabar</span>
+                                <span><i class="fas fa-money-bill-wave"></i> ₦2,000,000</span>
+                                <span><i class="fas fa-box"></i> Flour</span>
                             </div>
                         </div>
-                        <button class="btn">Bid</button>
+                        <button class="btn" onclick="placeBid('FMN Lagos to Calabar')">Bid</button>
                     </div>
-                    <div class="shipment-item">
+
+                    <div class="shipment-item" data-origin="Lagos" data-destination="Kano" data-goods="flour">
                         <div class="shipment-details">
-                            <h4>Nairobi to Kampala</h4>
-                            <p>Perishable goods, 3000kg, 8m³</p>
+                            <h4>FMN Lagos to Kano</h4>
+                            <p>Flour consignment, 25,000kg, 45m³</p>
                             <div class="shipment-meta">
-                                <span><i class="fas fa-calendar"></i> Posted 5 hours ago</span>
-                                <span><i class="fas fa-money-bill-wave"></i> $900 - $1,200</span>
+                                <span><i class="fas fa-map-marker-alt"></i> FMN Lagos Mill → Kano</span>
+                                <span><i class="fas fa-money-bill-wave"></i> ₦2,500,000</span>
+                                <span><i class="fas fa-box"></i> Flour</span>
                             </div>
                         </div>
-                        <button class="btn">Bid</button>
+                        <button class="btn" onclick="placeBid('FMN Lagos to Kano')">Bid</button>
                     </div>
-                    <div class="shipment-item">
+
+                    <div class="shipment-item" data-origin="Lagos" data-destination="Bauchi" data-goods="flour">
                         <div class="shipment-details">
-                            <h4>Johannesburg to Lusaka</h4>
-                            <p>Construction materials, 10000kg, 20m³</p>
+                            <h4>FMN Lagos to Bauchi</h4>
+                            <p>Flour consignment, 18,000kg, 35m³</p>
                             <div class="shipment-meta">
-                                <span><i class="fas fa-calendar"></i> Posted 1 day ago</span>
-                                <span><i class="fas fa-money-bill-wave"></i> $2,000 - $2,500</span>
+                                <span><i class="fas fa-map-marker-alt"></i> FMN Lagos Mill → Bauchi</span>
+                                <span><i class="fas fa-money-bill-wave"></i> ₦3,000,000</span>
+                                <span><i class="fas fa-box"></i> Flour</span>
                             </div>
                         </div>
-                        <button class="btn">Bid</button>
+                        <button class="btn" onclick="placeBid('FMN Lagos to Bauchi')">Bid</button>
+                    </div>
+
+                    <!-- Lacasera Beverages -->
+                    <div class="shipment-item" data-origin="Lagos" data-destination="Kaduna" data-goods="beverages">
+                        <div class="shipment-details">
+                            <h4>Lacasera Lagos to Kaduna</h4>
+                            <p>Beverages consignment, 15,000kg, 30m³</p>
+                            <div class="shipment-meta">
+                                <span><i class="fas fa-map-marker-alt"></i> Lacasera Factory → Kaduna</span>
+                                <span><i class="fas fa-money-bill-wave"></i> ₦1,800,000</span>
+                                <span><i class="fas fa-box"></i> Beverages</span>
+                            </div>
+                        </div>
+                        <button class="btn" onclick="placeBid('Lacasera Lagos to Kaduna')">Bid</button>
+                    </div>
+
+                    <div class="shipment-item" data-origin="Lagos" data-destination="Shaki" data-goods="beverages">
+                        <div class="shipment-details">
+                            <h4>Lacasera Lagos to Shaki</h4>
+                            <p>Beverages consignment, 8,000kg, 18m³</p>
+                            <div class="shipment-meta">
+                                <span><i class="fas fa-map-marker-alt"></i> Lacasera Factory → Shaki</span>
+                                <span><i class="fas fa-money-bill-wave"></i> ₦900,000</span>
+                                <span><i class="fas fa-box"></i> Beverages</span>
+                            </div>
+                        </div>
+                        <button class="btn" onclick="placeBid('Lacasera Lagos to Shaki')">Bid</button>
+                    </div>
+
+                    <!-- Sunti Sugar -->
+                    <div class="shipment-item" data-origin="Mokwa" data-destination="Sokoto" data-goods="sugar">
+                        <div class="shipment-details">
+                            <h4>Sunti Sugar Mokwa to Sokoto</h4>
+                            <p>Sugar consignment, 22,000kg, 38m³</p>
+                            <div class="shipment-meta">
+                                <span><i class="fas fa-map-marker-alt"></i> Sunti Sugar → Sokoto</span>
+                                <span><i class="fas fa-money-bill-wave"></i> ₦2,000,000</span>
+                                <span><i class="fas fa-box"></i> Sugar</span>
+                            </div>
+                        </div>
+                        <button class="btn" onclick="placeBid('Sunti Sugar Mokwa to Sokoto')">Bid</button>
+                    </div>
+
+                    <div class="shipment-item" data-origin="Mokwa" data-destination="Sagamu" data-goods="sugar">
+                        <div class="shipment-details">
+                            <h4>Sunti Sugar Mokwa to Sagamu</h4>
+                            <p>Sugar consignment, 18,000kg, 32m³</p>
+                            <div class="shipment-meta">
+                                <span><i class="fas fa-map-marker-alt"></i> Sunti Sugar → Sagamu</span>
+                                <span><i class="fas fa-money-bill-wave"></i> ₦1,700,000</span>
+                                <span><i class="fas fa-box"></i> Sugar</span>
+                            </div>
+                        </div>
+                        <button class="btn" onclick="placeBid('Sunti Sugar Mokwa to Sagamu')">Bid</button>
+                    </div>
+
+                    <!-- Olam Rice -->
+                    <div class="shipment-item" data-origin="Rukubi" data-destination="Abuja" data-goods="rice">
+                        <div class="shipment-details">
+                            <h4>Olam Rice Rukubi to Abuja</h4>
+                            <p>Rice consignment, 12,000kg, 25m³</p>
+                            <div class="shipment-meta">
+                                <span><i class="fas fa-map-marker-alt"></i> Olam Rukubi → Abuja</span>
+                                <span><i class="fas fa-money-bill-wave"></i> ₦800,000</span>
+                                <span><i class="fas fa-box"></i> Rice</span>
+                            </div>
+                        </div>
+                        <button class="btn" onclick="placeBid('Olam Rice Rukubi to Abuja')">Bid</button>
+                    </div>
+
+                    <div class="shipment-item" data-origin="Rukubi" data-destination="Port Harcourt" data-goods="rice">
+                        <div class="shipment-details">
+                            <h4>Olam Rice Rukubi to Port Harcourt</h4>
+                            <p>Rice consignment, 20,000kg, 42m³</p>
+                            <div class="shipment-meta">
+                                <span><i class="fas fa-map-marker-alt"></i> Olam Rukubi → Port Harcourt</span>
+                                <span><i class="fas fa-money-bill-wave"></i> ₦1,700,000</span>
+                                <span><i class="fas fa-box"></i> Rice</span>
+                            </div>
+                        </div>
+                        <button class="btn" onclick="placeBid('Olam Rice Rukubi to Port Harcourt')">Bid</button>
+                    </div>
+
+                    <!-- Portland Cement -->
+                    <div class="shipment-item" data-origin="Ewekoro" data-destination="Onitsha" data-goods="cement">
+                        <div class="shipment-details">
+                            <h4>Portland Cement Ewekoro to Onitsha</h4>
+                            <p>Cement consignment, 30,000kg, 28m³</p>
+                            <div class="shipment-meta">
+                                <span><i class="fas fa-map-marker-alt"></i> Ewekoro Plant → Onitsha</span>
+                                <span><i class="fas fa-money-bill-wave"></i> ₦2,200,000</span>
+                                <span><i class="fas fa-box"></i> Cement</span>
+                            </div>
+                        </div>
+                        <button class="btn" onclick="placeBid('Portland Cement Ewekoro to Onitsha')">Bid</button>
+                    </div>
+
+                    <div class="shipment-item" data-origin="Ewekoro" data-destination="Malumfashi" data-goods="cement">
+                        <div class="shipment-details">
+                            <h4>Portland Cement Ewekoro to Malumfashi</h4>
+                            <p>Cement consignment, 32,000kg, 30m³</p>
+                            <div class="shipment-meta">
+                                <span><i class="fas fa-map-marker-alt"></i> Ewekoro Plant → Malumfashi</span>
+                                <span><i class="fas fa-money-bill-wave"></i> ₦2,800,000</span>
+                                <span><i class="fas fa-box"></i> Cement</span>
+                            </div>
+                        </div>
+                        <button class="btn" onclick="placeBid('Portland Cement Ewekoro to Malumfashi')">Bid</button>
+                    </div>
+
+                    <!-- Oshogbo Rolling Mills -->
+                    <div class="shipment-item" data-origin="Oshogbo" data-destination="Maiduguri" data-goods="iron rod">
+                        <div class="shipment-details">
+                            <h4>Oshogbo Rolling Mills to Maiduguri</h4>
+                            <p>Iron rod consignment, 45,000kg, 35m³</p>
+                            <div class="shipment-meta">
+                                <span><i class="fas fa-map-marker-alt"></i> Oshogbo Mills → Maiduguri</span>
+                                <span><i class="fas fa-money-bill-wave"></i> ₦3,800,000</span>
+                                <span><i class="fas fa-box"></i> Iron Rod</span>
+                            </div>
+                        </div>
+                        <button class="btn" onclick="placeBid('Oshogbo Rolling Mills to Maiduguri')">Bid</button>
                     </div>
                 </div>
             </div>
@@ -609,15 +787,10 @@
                     <label for="tracking-number">Enter Tracking Number</label>
                     <input type="text" id="tracking-number" placeholder="e.g. CC-123456">
                 </div>
-                <button class="btn">Track</button>
+                <button class="btn" onclick="trackShipment()">Track</button>
                 
-                <div style="margin-top: 2rem; padding: 1rem; background: var(--light); border-radius: 5px;">
-                    <h4>Sample Tracking Result</h4>
-                    <p>Tracking Number: <strong>CC-123456</strong></p>
-                    <p>Route: <strong>Lagos, Nigeria → Accra, Ghana</strong></p>
-                    <p>Status: <strong style="color: var(--success);">In Transit</strong></p>
-                    <p>Current Location: <strong>Approaching Lome, Togo</strong></p>
-                    <p>Estimated Delivery: <strong>2 days</strong></p>
+                <div id="tracking-results" style="margin-top: 2rem; padding: 1rem; background: var(--light); border-radius: 5px; display: none;">
+                    <!-- Tracking results will appear here -->
                 </div>
             </div>
         </div>
@@ -777,16 +950,122 @@
             });
         });
         
-        // Track button functionality
-        const trackButton = document.querySelector('#track-tab .btn');
-        trackButton.addEventListener('click', function() {
+        // Enhanced Track button functionality
+        function trackShipment() {
             const trackingNumber = document.getElementById('tracking-number').value;
-            if(trackingNumber) {
-                alert(`Tracking shipment: ${trackingNumber}. In a full implementation, this would fetch real tracking data.`);
-            } else {
+            
+            if(!trackingNumber) {
                 alert('Please enter a tracking number');
+                return;
             }
-        });
+
+            const resultsDiv = document.getElementById('tracking-results');
+            resultsDiv.style.display = 'block';
+            
+            // Sample tracking data for demo
+            const sampleData = {
+                trackingNumber: trackingNumber,
+                origin: "Lagos, Nigeria",
+                destination: "Accra, Ghana",
+                status: "In Transit",
+                currentLocation: "Approaching Lome, Togo",
+                estimatedDelivery: "2 days",
+                history: [
+                    { date: "2023-11-28 08:30", location: "Lagos Warehouse", status: "Package Received", notes: "Documentation verified" },
+                    { date: "2023-11-28 14:15", location: "Lagos", status: "Dispatched", notes: "Vehicle loaded and departed" },
+                    { date: "2023-11-29 09:00", location: "Cotonou, Benin", status: "In Transit", notes: "Passed border checkpoint" }
+                ]
+            };
+            
+            displayTrackingResults(sampleData);
+        }
+
+        function displayTrackingResults(trackingData) {
+            const resultsContainer = document.getElementById('tracking-results');
+            
+            resultsContainer.innerHTML = `
+                <h4>Tracking Results</h4>
+                <p>Tracking Number: <strong>${trackingData.trackingNumber}</strong></p>
+                <p>Route: <strong>${trackingData.origin} → ${trackingData.destination}</strong></p>
+                <p>Status: <strong style="color: ${getStatusColor(trackingData.status)};">${trackingData.status}</strong></p>
+                <p>Current Location: <strong>${trackingData.currentLocation}</strong></p>
+                <p>Estimated Delivery: <strong>${trackingData.estimatedDelivery}</strong></p>
+                
+                ${trackingData.history ? `
+                <div style="margin-top: 1rem;">
+                    <h5>Tracking History</h5>
+                    <div style="border-left: 2px solid var(--primary); padding-left: 1rem; margin-left: 0.5rem;">
+                        ${trackingData.history.map(event => `
+                            <div style="margin-bottom: 0.5rem;">
+                                <strong>${event.date}</strong>: ${event.location} - ${event.status}
+                                ${event.notes ? `<br><em>${event.notes}</em>` : ''}
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+                ` : ''}
+            `;
+        }
+
+        function getStatusColor(status) {
+            const statusColors = {
+                'posted': 'var(--gray)',
+                'bidding': 'var(--primary)',
+                'assigned': 'var(--secondary)',
+                'in-transit': 'var(--accent)',
+                'delivered': 'var(--success)',
+                'cancelled': 'var(--danger)'
+            };
+            return statusColors[status.toLowerCase()] || 'var(--gray)';
+        }
+
+        // Filter shipments function
+        function filterShipments() {
+            const originFilter = document.getElementById('filter-origin').value.toLowerCase();
+            const destinationFilter = document.getElementById('filter-destination').value.toLowerCase();
+            const goodsFilter = document.getElementById('filter-goods').value.toLowerCase();
+            
+            const shipmentItems = document.querySelectorAll('.shipment-item');
+            
+            shipmentItems.forEach(item => {
+                const origin = item.getAttribute('data-origin').toLowerCase();
+                const destination = item.getAttribute('data-destination').toLowerCase();
+                const goods = item.getAttribute('data-goods').toLowerCase();
+                
+                const originMatch = origin.includes(originFilter);
+                const destinationMatch = destination.includes(destinationFilter);
+                const goodsMatch = goods.includes(goodsFilter);
+                
+                if ((originFilter === '' || originMatch) && 
+                    (destinationFilter === '' || destinationMatch) && 
+                    (goodsFilter === '' || goodsMatch)) {
+                    item.style.display = 'grid';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        // Clear filters function
+        function clearFilters() {
+            document.getElementById('filter-origin').value = '';
+            document.getElementById('filter-destination').value = '';
+            document.getElementById('filter-goods').value = '';
+            
+            const shipmentItems = document.querySelectorAll('.shipment-item');
+            shipmentItems.forEach(item => {
+                item.style.display = 'grid';
+            });
+        }
+
+        // Enhanced place bid function
+        function placeBid(shipmentName) {
+            const bidAmount = prompt(`Enter your bid amount for ${shipmentName} (in Naira):`);
+            if (bidAmount !== null && bidAmount !== '') {
+                alert(`Bid of ₦${bidAmount} placed successfully on ${shipmentName}!`);
+                // In real implementation, this would send to backend
+            }
+        }
 
         // Auth Modal Functionality
         const authModal = document.getElementById('auth-modal');
