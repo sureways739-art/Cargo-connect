@@ -1,4 +1,3 @@
-``html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -418,6 +417,7 @@
                         <li><a href="#demo">Demo</a></li>
                         <li><a href="#scalability">Scalability</a></li>
                         <li><a href="#contact">Contact</a></li>
+                        <li><a href="#" onclick="openAuthModal(); return false;">Login</a></li>
                     </ul>
                 </nav>
             </div>
@@ -705,6 +705,46 @@
         </div>
     </footer>
 
+    <!-- Login/Signup Modal -->
+    <div id="auth-modal" style="display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5);">
+        <div style="background-color: white; margin: 10% auto; padding: 2rem; border-radius: 10px; width: 90%; max-width: 400px;">
+            <span id="close-auth-modal" style="float: right; font-size: 1.5rem; cursor: pointer;">&times;</span>
+            
+            <h2 id="auth-title">Login to Cargo Connect</h2>
+            
+            <form id="auth-form">
+                <div id="name-field" style="display: none;" class="form-group">
+                    <label for="auth-name">Full Name</label>
+                    <input type="text" id="auth-name">
+                </div>
+                
+                <div class="form-group">
+                    <label for="auth-email">Email</label>
+                    <input type="email" id="auth-email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="auth-password">Password</label>
+                    <input type="password" id="auth-password" required>
+                </div>
+                
+                <div id="user-type-field" style="display: none;" class="form-group">
+                    <label>I am a:</label>
+                    <select id="auth-user-type">
+                        <option value="shipper">Goods Owner</option>
+                        <option value="transporter">Transporter</option>
+                    </select>
+                </div>
+                
+                <button type="submit" class="btn" style="width: 100%; margin-top: 1rem;">Login</button>
+            </form>
+            
+            <p id="auth-switch" style="text-align: center; margin-top: 1rem;">
+                Don't have an account? <a href="#" id="auth-switch-link">Sign up</a>
+            </p>
+        </div>
+    </div>
+
     <script>
         // Tab functionality
         function openTab(tabId) {
@@ -747,187 +787,95 @@
                 alert('Please enter a tracking number');
             }
         });
-<!-- Login/Signup Modal -->
-<div id="auth-modal" style="display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5);">
-    <div style="background-color: white; margin: 10% auto; padding: 2rem; border-radius: 10px; width: 90%; max-width: 400px;">
-        <span id="close-auth-modal" style="float: right; font-size: 1.5rem; cursor: pointer;">&times;</span>
-        
-        <h2 id="auth-title">Login to Cargo Connect</h2>
-        
-        <form id="auth-form">
-            <div id="name-field" style="display: none;" class="form-group">
-                <label for="auth-name">Full Name</label>
-                <input type="text" id="auth-name">
-            </div>
-            
-            <div class="form-group">
-                <label for="auth-email">Email</label>
-                <input type="email" id="auth-email" required>
-            </div>
-            
-            <div class="form-group">
-                <label for="auth-password">Password</label>
-                <input type="password" id="auth-password" required>
-            </div>
-            
-            <div id="user-type-field" style="display: none;" class="form-group">
-                <label>I am a:</label>
-                <select id="auth-user-type">
-                    <option value="shipper">Goods Owner</option>
-                    <option value="transporter">Transporter</option>
-                </select>
-            </div>
-            
-            <button type="submit" class="btn" style="width: 100%; margin-top: 1rem;">Login</button>
-        </form>
-        
-        <p id="auth-switch" style="text-align: center; margin-top: 1rem;">
-            Don't have an account? <a href="#" id="auth-switch-link">Sign up</a>
-        </p>
-    </div>
-</div>
 
-<script>
-    // Auth Modal Functionality
-    const authModal = document.getElementById('auth-modal');
-    const authForm = document.getElementById('auth-form');
-    const authTitle = document.getElementById('auth-title');
-    const authSwitchLink = document.getElementById('auth-switch-link');
-    const authSwitchText = document.getElementById('auth-switch');
-    const nameField = document.getElementById('name-field');
-    const userTypeField = document.getElementById('user-type-field');
-    let isLoginMode = true;
+        // Auth Modal Functionality
+        const authModal = document.getElementById('auth-modal');
+        const authForm = document.getElementById('auth-form');
+        const authTitle = document.getElementById('auth-title');
+        const authSwitchLink = document.getElementById('auth-switch-link');
+        const authSwitchText = document.getElementById('auth-switch');
+        const nameField = document.getElementById('name-field');
+        const userTypeField = document.getElementById('user-type-field');
+        let isLoginMode = true;
 
-    // Open modal when clicking login button in header (you'll need to add this button)
-    function openAuthModal() {
-        authModal.style.display = 'block';
-        setAuthMode(true);
-    }
-
-    // Close modal
-    document.getElementById('close-auth-modal').onclick = function() {
-        authModal.style.display = 'none';
-    }
-
-    // Switch between login/signup
-    authSwitchLink.onclick = function(e) {
-        e.preventDefault();
-        setAuthMode(!isLoginMode);
-    }
-
-    function setAuthMode(isLogin) {
-        isLoginMode = isLogin;
-        if (isLogin) {
-            authTitle.textContent = 'Login to Cargo Connect';
-            document.querySelector('#auth-form button').textContent = 'Login';
-            authSwitchLink.textContent = 'Sign up';
-            authSwitchText.innerHTML = 'Don\'t have an account? <a href="#" id="auth-switch-link">Sign up</a>';
-            nameField.style.display = 'none';
-            userTypeField.style.display = 'none';
-        } else {
-            authTitle.textContent = 'Create an Account';
-            document.querySelector('#auth-form button').textContent = 'Sign Up';
-            authSwitchLink.textContent = 'Login';
-            authSwitchText.innerHTML = 'Already have an account? <a href="#" id="auth-switch-link">Login</a>';
-            nameField.style.display = 'block';
-            userTypeField.style.display = 'block';
+        // Open modal when clicking login button in header
+        function openAuthModal() {
+            authModal.style.display = 'block';
+            setAuthMode(true);
         }
-    }
 
-    // Handle form submission
-    authForm.onsubmit = function(e) {
-        e.preventDefault();
-        const email = document.getElementById('auth-email').value;
-        const password = document.getElementById('auth-password').value;
-        
-        if (isLoginMode) {
-            // Simulate login
-            alert(`Login attempted with: ${email}`);
-            authModal.style.display = 'none';
-            // Update UI to show logged in state
-            document.querySelector('nav ul').innerHTML += '<li><a href="#" onclick="logout()"><i class="fas fa-user"></i> My Account</a></li>';
-        } else {
-            const name = document.getElementById('auth-name').value;
-            const userType = document.getElementById('auth-user-type').value;
-            // Simulate signup
-            alert(`Account created for: ${name} (${email}) as ${userType}`);
-            authModal.style.display = 'none';
-            setAuthMode(true); // Switch back to login mode
-        }
-    }
-
-    function logout() {
-        alert("Logged out successfully");
-        // Reload the page to reset state
-        location.reload();
-    }
-
-    // Close modal if user clicks outside
-    window.onclick = function(event) {
-        if (event.target == authModal) {
+        // Close modal
+        document.getElementById('close-auth-modal').onclick = function() {
             authModal.style.display = 'none';
         }
-    }
-</script>
-```
 
-Add a Login button to your header by updating the navigation:
-```html
-<nav>
-    <ul>
-        <li><a href="#features">Features</a></li>
-        <li><a href="#how-it-works">How It Works</a></li>
-        <li><a href="#demo">Demo</a></li>
-        <li><a href="#scalability">Scalability</a></li>
-        <li><a href="#contact">Contact</a></li>
-        <li><a href="#" onclick="openAuthModal(); return false;">Login</a></li>
-    </ul>
-</nav>
-```
-
-#### 1.2 Add Local Storage for Shipments
-Add this script to persist shipment data in the browser:
-
-... html 
-<script>
-    // Load saved shipments when the page loads
-    document.addEventListener('DOMContentLoaded', function() {
-        const savedShipments = JSON.parse(localStorage.getItem('cargoShipments')) || [];
-        if (savedShipments.length > 0) {
-            // You could enhance the UI to show these saved shipments
-            console.log('Loaded saved shipments:', savedShipments);
+        // Switch between login/signup
+        authSwitchLink.onclick = function(e) {
+            e.preventDefault();
+            setAuthMode(!isLoginMode);
         }
-    });
 
-    // Enhance the shipment form submission to save data
-    document.getElementById('shipment-form').addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        const newShipment = {
-            origin: document.getElementById('origin').value,
-            destination: document.getElementById('destination').value,
-            goodsType: document.getElementById('goods-type').value,
-            weight: document.getElementById('weight').value,
-            volume: document.getElementById('volume').value,
-            notes: document.getElementById('notes').value,
-            date: new Date().toLocaleDateString(),
-            id: Date.now() // Unique ID
-        };
-        
-        // Save to local storage
-        const savedShipments = JSON.parse(localStorage.getItem('cargoShipments')) || [];
-        savedShipments.push(newShipment);
-        localStorage.setItem('cargoShipments', JSON.stringify(savedShipments));
-        
-        alert(`Shipment from ${newShipment.origin} to ${newShipment.destination} posted successfully!`);
-        this.reset();
-        
-        // If on the browse tab, refresh the list
-        if (document.getElementById('browse-tab').classList.contains('active')) {
-            // You could implement a function to refresh the browse list
+        function setAuthMode(isLogin) {
+            isLoginMode = isLogin;
+            if (isLogin) {
+                authTitle.textContent = 'Login to Cargo Connect';
+                document.querySelector('#auth-form button').textContent = 'Login';
+                authSwitchLink.textContent = 'Sign up';
+                authSwitchText.innerHTML = 'Don\'t have an account? <a href="#" id="auth-switch-link">Sign up</a>';
+                nameField.style.display = 'none';
+                userTypeField.style.display = 'none';
+            } else {
+                authTitle.textContent = 'Create an Account';
+                document.querySelector('#auth-form button').textContent = 'Sign Up';
+                authSwitchLink.textContent = 'Login';
+                authSwitchText.innerHTML = 'Already have an account? <a href="#" id="auth-switch-link">Login</a>';
+                nameField.style.display = 'block';
+                userTypeField.style.display = 'block';
+            }
         }
-    });
-</script> 
+
+        // Handle form submission
+        authForm.onsubmit = function(e) {
+            e.preventDefault();
+            const email = document.getElementById('auth-email').value;
+            const password = document.getElementById('auth-password').value;
+            
+            if (isLoginMode) {
+                // Simulate login
+                alert(`Login attempted with: ${email}`);
+                authModal.style.display = 'none';
+                // Update UI to show logged in state
+                document.querySelector('nav ul').innerHTML += '<li><a href="#" onclick="logout()"><i class="fas fa-user"></i> My Account</a></li>';
+            } else {
+                const name = document.getElementById('auth-name').value;
+                const userType = document.getElementById('auth-user-type').value;
+                // Simulate signup
+                alert(`Account created for: ${name} (${email}) as ${userType}`);
+                authModal.style.display = 'none';
+                setAuthMode(true); // Switch back to login mode
+            }
+        }
+
+        function logout() {
+            alert("Logged out successfully");
+            // Reload the page to reset state
+            location.reload();
+        }
+
+        // Close modal if user clicks outside
+        window.onclick = function(event) {
+            if (event.target == authModal) {
+                authModal.style.display = 'none';
+            }
+        }
+
+        // Load saved shipments when the page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedShipments = JSON.parse(localStorage.getItem('cargoShipments')) || [];
+            if (savedShipments.length > 0) {
+                console.log('Loaded saved shipments:', savedShipments);
+            }
+        });
+    </script>
 </body>
 </html>
-```
