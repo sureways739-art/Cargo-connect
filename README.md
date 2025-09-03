@@ -1,4 +1,10 @@
-Cargo Connect: sBTC-Powered Logistics Revolutionizing African Trade**
+# Cargo Connect - sBTC Powered Logistics Platform
+
+**Revolutionizing African trade with Bitcoin technology. Live demo featuring Nigerian routes, AI-powered matching, and instant sBTC payments.**
+
+🏢 **Company:** Sureway Integrated Technology Solutions Ltd. (RC 8481374)
+📧 **Email:** sureways739@gmail.com
+📞 **Phone:** +2348152676740 
 
 **🏆 Submission for:** Stacks Builder Challenge - "Stripe for Bitcoin" Implementation  
 **🚀 Live Demo:** https://sureways739-art.github.io/Cargo-connect/  
@@ -92,9 +98,8 @@ contract LogisticsEscrow {
 
 **Full legal documentation:** [/legal/LEGAL.md](/legal/LEGAL.md)
 
-**Regulatory Compliance:** [/legal/COMPLIANCE.md](/legal/COMPLIANCE.md)
+**Regulatory Compliance:** [/legal/COMPLIANCE.md]
 
-### Funding Utilization
 ### **Funding Utilization**
 The $3,000 prize would accelerate our development:
 1. **Enhanced sBTC Integration** ($1,200): Advanced smart contracts and security
