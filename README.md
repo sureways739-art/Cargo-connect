@@ -80,6 +80,21 @@ contract LogisticsEscrow {
 - **Expertise**: Full-stack development, African market knowledge
 - **Vision**: Transforming African logistics through blockchain technology
 
+🏢 Legal & Compliance
+-----------------------------------------------------------------
+
+**Sureway Integrated Technology Solutions Limited** (RC 8481374) is a registered Nigerian technology company with specific authorization for:
+
+- 🔗 Blockchain technology development (Article 3.4)
+- 🌍 Cross-border payment solutions (Article 3.5)
+- 🚚 Logistics technology platforms (Article 3.10 - CargoConnect Project)
+- 💳 AfCFTA-compliant trade facilitation
+
+**Full legal documentation:** [/legal/LEGAL.md](/legal/LEGAL.md)
+
+**Regulatory Compliance:** [/legal/COMPLIANCE.md](/legal/COMPLIANCE.md)
+
+### Funding Utilization
 ### **Funding Utilization**
 The $3,000 prize would accelerate our development:
 1. **Enhanced sBTC Integration** ($1,200): Advanced smart contracts and security
