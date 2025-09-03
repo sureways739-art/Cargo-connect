@@ -3,7 +3,7 @@
 ## Company Information
 - **Name:** Sureway Integrated Technology Solutions Limited
 - **Registration:** RC 8481374 (CAC Nigeria)
-- **TIN:** [INSERT YOUR TIN NUMBER HERE]
+- **TIN:** [33181831-0001]
 - **Email:** sureways739@gmail.com
 - **Phone:** +2348152676740
 
